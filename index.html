@@ -6,46 +6,132 @@
     <meta name="theme-color" content="#ea580c">
     <meta name="description" content="Karah Parshad Date Calculator">
     
-    <!-- ਇਹ ਲਾਈਨ ਸਭ ਤੋਂ ਜ਼ਰੂਰੀ ਹੈ, ਇਹ ਮੈਨੀਫੈਸਟ ਨੂੰ ਜੋੜਦੀ ਹੈ -->
+    <!-- ਮੈਨੀਫੈਸਟ ਫਾਈਲ -->
     <link rel="manifest" href="manifest.json">
     
-    <!-- Icons -->
+    <!-- ਆਈਕਨ -->
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon-192.png">
 
     <title>ਪਰਚੀ ਹਿਸਾਬ</title>
     <style>
+        /* CSS Variables for Theming */
+        :root {
+            --primary: #ea580c;
+            --bg-color: #fff7ed;
+            --card-bg: #ffffff;
+            --text-color: #374151;
+            --heading-color: #9a3412;
+            --input-bg: #f9fafb;
+            --input-border: #e5e7eb;
+            --input-text: #111827;
+            --helper-bg: #f3f4f6;
+            --helper-text: #6b7280;
+            --footer-bg: #f0fdf4;
+            --footer-border: #bbf7d0;
+            --footer-name: #1f2937;
+            --footer-city: #4b5563;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --card-border: none;
+        }
+
+        /* SUPER AMOLED DARK MODE */
+        .dark-mode {
+            --primary: #ea580c; /* Keep orange same or slightly darker if needed */
+            --bg-color: #000000; /* Pure Black */
+            --card-bg: #000000; /* Pure Black */
+            --text-color: #e5e5e5;
+            --heading-color: #fdba74;
+            --input-bg: #121212;
+            --input-border: #333333;
+            --input-text: #ffffff;
+            --helper-bg: #121212;
+            --helper-text: #9ca3af;
+            --footer-bg: #000000;
+            --footer-border: #333333;
+            --footer-name: #ffffff;
+            --footer-city: #d1d5db;
+            --shadow: none;
+            --card-border: 1px solid #333333; /* Border to define card in black */
+        }
+
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #fff7ed;
+            background-color: var(--bg-color);
             margin: 0; padding: 15px; 
-            padding-bottom: 90px; /* ਪੱਟੀ ਲਈ ਜਗ੍ਹਾ */
-            color: #374151;
+            padding-bottom: 90px;
+            color: var(--text-color);
             display: flex; justify-content: center; min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
         }
+
         .container {
-            background-color: #ffffff; width: 100%; max-width: 500px;
-            border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            overflow: hidden; border-top: 6px solid #ea580c;
+            background-color: var(--card-bg); 
+            width: 100%; max-width: 500px;
+            border-radius: 16px; 
+            box-shadow: var(--shadow);
+            border: var(--card-border);
+            overflow: hidden; 
+            border-top: 6px solid var(--primary);
             height: fit-content; display: flex; flex-direction: column;
+            transition: background-color 0.3s, border 0.3s;
         }
-        .header { background-color: #ea580c; color: white; padding: 20px; text-align: center; }
-        .header h1 { margin: 0; font-size: 24px; font-weight: 700; }
-        .header p { margin: 5px 0 0 0; font-size: 14px; opacity: 0.9; }
+
+        /* Header with Flexbox for Dark Mode Toggle */
+        .header { 
+            background-color: var(--primary); 
+            color: white; padding: 20px; 
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .header-text { text-align: left; }
+        .header h1 { margin: 0; font-size: 22px; font-weight: 700; }
+        .header p { margin: 3px 0 0 0; font-size: 13px; opacity: 0.9; }
+
+        /* Dark Mode Toggle Button */
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none; cursor: pointer; color: white;
+            padding: 8px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+        }
+        .theme-toggle:active { transform: scale(0.95); background: rgba(255,255,255,0.3); }
+
         .content { padding: 20px; flex-grow: 1; }
         
-        .section-label { font-size: 16px; font-weight: 700; color: #9a3412; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-        .date-input-wrapper { background: #fff; border: 1px solid #fdba74; border-radius: 12px; padding: 5px; margin-bottom: 25px; }
-        input[type="date"] { width: 100%; padding: 12px; font-size: 18px; border: none; background: transparent; color: #1f2937; font-family: inherit; }
+        .section-label { font-size: 16px; font-weight: 700; color: var(--heading-color); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        
+        .date-input-wrapper { 
+            background: var(--input-bg); 
+            border: 1px solid var(--input-border); 
+            border-radius: 12px; padding: 5px; margin-bottom: 25px; 
+        }
+        /* Filter allows SVG icon color change in date input */
+        .dark-mode input[type="date"] { color-scheme: dark; }
+
+        input[type="date"] { 
+            width: 100%; padding: 12px; font-size: 18px; border: none; 
+            background: transparent; color: var(--input-text); font-family: inherit; 
+        }
         
         .input-grid { display: flex; gap: 12px; margin-bottom: 10px; }
         .input-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
-        .input-item label { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 6px; }
-        .input-item input { width: 100%; padding: 15px 5px; font-size: 22px; text-align: center; border: 2px solid #e5e7eb; border-radius: 12px; font-weight: bold; color: #111827; background-color: #f9fafb; }
-        .input-item input:focus { outline: none; border-color: #ea580c; background-color: #fff; }
+        .input-item label { font-size: 14px; font-weight: 600; color: var(--text-color); margin-bottom: 6px; }
         
-        .helper-text { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 25px; background: #f3f4f6; padding: 8px; border-radius: 8px; }
+        .input-item input { 
+            width: 100%; padding: 15px 5px; font-size: 22px; text-align: center; 
+            border: 2px solid var(--input-border); border-radius: 12px; 
+            font-weight: bold; color: var(--input-text); background-color: var(--input-bg);
+            transition: border-color 0.2s;
+        }
+        .input-item input:focus { outline: none; border-color: var(--primary); }
+        
+        .helper-text { 
+            text-align: center; font-size: 13px; color: var(--helper-text); 
+            margin-bottom: 25px; background: var(--helper-bg); padding: 8px; border-radius: 8px; 
+        }
         
         .btn-calc { 
             width: 100%; background-color: #16a34a; color: white; border: none; 
@@ -64,58 +150,52 @@
         .btn-reset:active { transform: translateY(4px); box-shadow: none; }
         
         .result-area { margin-top: 30px; margin-bottom: 20px; background-color: #ecfdf5; border: 2px solid #34d399; border-radius: 12px; padding: 20px; text-align: center; display: none; }
+        /* Dark Mode Override for Result Area (Keep it green but readable) */
+        .dark-mode .result-area { background-color: #064e3b; border-color: #059669; }
+        
         .result-title { color: #047857; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .dark-mode .result-title { color: #a7f3d0; }
+
         .result-date { color: #064e3b; font-size: 26px; font-weight: 800; line-height: 1.3; }
+        .dark-mode .result-date { color: #ffffff; }
 
         .creator-footer {
-            background-color: #f0fdf4; border-top: 2px solid #bbf7d0; padding: 30px 20px; text-align: center; margin-top: auto; display: flex; flex-direction: column; align-items: center;
+            background-color: var(--footer-bg); 
+            border-top: 2px solid var(--footer-border); 
+            padding: 30px 20px; text-align: center; margin-top: auto; 
+            display: flex; flex-direction: column; align-items: center;
         }
+        
         .profile-container {
             width: 100px; height: 100px; border-radius: 50%; border: 4px solid #16a34a; background-color: #e2e8f0; margin-bottom: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .profile-container img { width: 100%; height: 100%; object-fit: cover; }
         .placeholder-icon { width: 50%; height: 50%; color: #94a3b8; }
-        .created-by-text { font-size: 14px; color: #64748b; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        .creator-name { font-size: 24px; font-weight: 800; color: #1f2937; margin: 0 0 2px 0; line-height: 1.2; }
-        .creator-city { font-size: 20px; font-weight: 700; color: #4b5563; margin: 0 0 8px 0; }
-        .creator-phone { font-size: 26px; font-weight: 900; color: #15803d; margin: 0; font-family: monospace; }
         
-        /* INSTALL BANNER DESIGN */
+        .created-by-text { font-size: 14px; color: #64748b; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .creator-name { font-size: 24px; font-weight: 800; color: var(--footer-name); margin: 0 0 2px 0; line-height: 1.2; }
+        .creator-city { font-size: 20px; font-weight: 700; color: var(--footer-city); margin: 0 0 8px 0; }
+        .creator-phone { font-size: 26px; font-weight: 900; color: #16a34a; margin: 0; font-family: monospace; }
+        
+        /* INSTALL BANNER */
         #install-banner {
-            display: none; /* ਸ਼ੁਰੂ ਵਿੱਚ ਲੁਕਿਆ ਰਹੇਗਾ */
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            background-color: #1f2937; /* ਕਾਲਾ ਰੰਗ */
-            color: white;
-            padding: 12px 16px;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.3);
-            z-index: 9999;
-            align-items: center;
-            justify-content: space-between;
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: #1f2937; color: white; padding: 12px 16px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.3); z-index: 9999;
+            align-items: center; justify-content: space-between;
             animation: slideUp 0.5s ease-out;
+            border-top: 1px solid #374151;
         }
-
         .install-info { display: flex; align-items: center; gap: 12px; }
         .app-icon-small { width: 40px; height: 40px; border-radius: 8px; }
         .install-text-group { display: flex; flex-direction: column; }
         .install-title { font-weight: bold; font-size: 15px; }
         .install-subtitle { font-size: 12px; color: #9ca3af; }
-
         .banner-actions { display: flex; align-items: center; gap: 10px; }
-
-        .install-btn-banner {
-            background-color: #ea580c; /* ਸੰਤਰੀ ਰੰਗ */
-            color: white; border: none; padding: 8px 16px; border-radius: 20px;
-            font-weight: bold; font-size: 14px; cursor: pointer; white-space: nowrap;
-        }
-
-        .close-btn {
-            background: none; border: none; color: #9ca3af;
-            cursor: pointer; padding: 5px; display: flex; align-items: center;
-        }
+        .install-btn-banner { background-color: #ea580c; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; cursor: pointer; white-space: nowrap; }
+        .close-btn { background: none; border: none; color: #9ca3af; cursor: pointer; padding: 5px; display: flex; align-items: center; }
 
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
     </style>
@@ -124,8 +204,17 @@
 
     <div class="container">
         <div class="header">
-            <h1>ਕੜਾਹ ਪ੍ਰਸ਼ਾਦ ਕੈਲਕੁਲੇਟਰ</h1>
-            <p>ਸ੍ਰੀ ਦਰਬਾਰ ਸਾਹਿਬ, ਅੰਮ੍ਰਿਤਸਰ</p>
+            <div class="header-text">
+                <h1>ਕੜਾਹ ਪ੍ਰਸ਼ਾਦ ਕੈਲਕੁਲੇਟਰ</h1>
+                <p>ਸ੍ਰੀ ਦਰਬਾਰ ਸਾਹਿਬ, ਅੰਮ੍ਰਿਤਸਰ</p>
+            </div>
+            <!-- Theme Toggle Button -->
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
+                <!-- Sun Icon (Default hidden) -->
+                <svg id="sun-icon" style="display:none;" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <!-- Moon Icon -->
+                <svg id="moon-icon" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
         </div>
 
         <div class="content">
@@ -189,7 +278,7 @@
         </div>
     </div>
 
-    <!-- INSTALL BANNER (ਸਿਰਫ ਇਹ ਨਵੀਂ ਚੀਜ਼ ਜੁੜੀ ਹੈ) -->
+    <!-- INSTALL BANNER -->
     <div id="install-banner">
         <div class="install-info">
             <img src="icon-192.png" alt="Icon" class="app-icon-small">
@@ -200,7 +289,6 @@
         </div>
         <div class="banner-actions">
             <button class="install-btn-banner" onclick="installApp()">ਇੰਸਟਾਲ</button>
-            <!-- ਕਾਟੀ (X) ਦਾ ਨਿਸ਼ਾਨ -->
             <button class="close-btn" onclick="closeBanner()">
                 <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
@@ -208,38 +296,64 @@
     </div>
 
     <script>
+        // --- DARK MODE LOGIC ---
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            
+            // Save preference
+            const isDark = body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            
+            updateIcon(isDark);
+        }
+
+        function updateIcon(isDark) {
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            if (isDark) {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+        }
+
+        // Check preference on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                updateIcon(true);
+            }
+        });
+
+
         // --- INSTALL LOGIC ---
         let deferredPrompt;
         const installBanner = document.getElementById('install-banner');
 
-        // ਇਹ ਕੋਡ ਚੈੱਕ ਕਰਦਾ ਹੈ ਕਿ ਐਪ ਪਹਿਲਾਂ ਹੀ ਇੰਸਟਾਲ ਹੈ ਜਾਂ ਨਹੀਂ
         if (window.matchMedia('(display-mode: standalone)').matches) {
-            installBanner.style.display = 'none'; // ਜੇ ਇੰਸਟਾਲ ਹੈ, ਤਾਂ ਪੱਟੀ ਨਹੀਂ ਆਵੇਗੀ
+            installBanner.style.display = 'none';
         }
 
-        // ਇਹ ਇਵੈਂਟ ਉਦੋਂ ਚੱਲਦਾ ਹੈ ਜਦੋਂ ਕਰੋਮ ਨੂੰ ਲੱਗਦਾ ਹੈ ਕਿ ਐਪ ਇੰਸਟਾਲ ਹੋ ਸਕਦੀ ਹੈ
         window.addEventListener('beforeinstallprompt', (e) => {
-            // ਕਰੋਮ ਦੀ ਆਪਣੀ ਪੁਰਾਣੀ ਪੱਟੀ ਨੂੰ ਰੋਕੋ
             e.preventDefault();
-            // ਇਵੈਂਟ ਨੂੰ ਸਾਂਭ ਕੇ ਰੱਖੋ ਤਾਂ ਜੋ ਬਾਅਦ ਵਿੱਚ ਬਟਨ ਦਬਾਉਣ 'ਤੇ ਵਰਤ ਸਕੀਏ
             deferredPrompt = e;
-            // ਸਾਡੀ ਆਪਣੀ ਪੱਟੀ ਦਿਖਾਓ
             installBanner.style.display = 'flex';
         });
 
         async function installApp() {
             if (deferredPrompt) {
-                // ਅਸਲੀ ਇੰਸਟਾਲ ਪ੍ਰੋਸੈਸ ਸ਼ੁਰੂ ਕਰੋ
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 deferredPrompt = null;
-                // ਪੱਟੀ ਹਟਾ ਦਿਓ
                 installBanner.style.display = 'none';
             }
         }
 
         function closeBanner() {
-            // ਕਾਟੀ ਦਬਾਉਣ 'ਤੇ ਪੱਟੀ ਹਟ ਜਾਵੇਗੀ
             installBanner.style.display = 'none';
         }
 
@@ -247,8 +361,7 @@
             installBanner.style.display = 'none';
         });
 
-
-        // --- APP LOGIC (ਪੁਰਾਣਾ ਕੋਡ) ---
+        // --- APP LOGIC ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./service-worker.js')
@@ -257,7 +370,15 @@
             });
         }
 
-        window.onload = function() { setTodayDate(); };
+        window.onload = function() { 
+            setTodayDate();
+            // Re-check theme just in case onload fires after DOMContentLoaded
+            const isDark = localStorage.getItem('darkMode') === 'true';
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                updateIcon(true);
+            }
+        };
 
         function setTodayDate() {
             const today = new Date().toISOString().split('T')[0];
