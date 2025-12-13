@@ -6,10 +6,10 @@
     <meta name="theme-color" content="#ea580c">
     <meta name="description" content="Karah Parshad Date Calculator">
     
-    <!-- PWA Manifest Link -->
-    <link rel="manifest" href="manifest.json">
+    <!-- ਲਿੰਕ ਮੈਨੀਫੈਸਟ ਫਾਈਲ ਨਾਲ -->
+    <link rel="manifest" href="./manifest.json">
     
-    <!-- Embedded Logo Code -->
+    <!-- Browser Tab Icon -->
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNlYTU4MGMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9Ijc1IiBmaWxsPSJ3aGl0ZSI+4Kqu4Kqs4KqP4KqAIOCqrOCqvOCqm+CqsOCqeTwvdGV4dD48L3N2Zz4=">
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNlYTU4MGMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9Ijc1IiBmaWxsPSJ3aGl0ZSI+4Kqu4Kqs4KqP4KqAIOCqrOCqvOCqm+CqsOCqeTwvdGV4dD48L3N2Zz4=">
 
@@ -19,7 +19,7 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #fff7ed;
-            margin: 0; padding: 15px; padding-bottom: 80px; /* Space for install banner */
+            margin: 0; padding: 15px; padding-bottom: 90px;
             color: #374151;
             display: flex; justify-content: center; min-height: 100vh;
         }
@@ -34,12 +34,10 @@
         .header p { margin: 5px 0 0 0; font-size: 14px; opacity: 0.9; }
         .content { padding: 20px; flex-grow: 1; }
         
-        /* Inputs */
         .section-label { font-size: 16px; font-weight: 700; color: #9a3412; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
         .date-input-wrapper { background: #fff; border: 1px solid #fdba74; border-radius: 12px; padding: 5px; margin-bottom: 25px; }
         input[type="date"] { width: 100%; padding: 12px; font-size: 18px; border: none; background: transparent; color: #1f2937; font-family: inherit; }
         
-        /* Grid */
         .input-grid { display: flex; gap: 12px; margin-bottom: 10px; }
         .input-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
         .input-item label { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 6px; }
@@ -48,7 +46,6 @@
         
         .helper-text { text-align: center; font-size: 13px; color: #6b7280; margin-bottom: 25px; background: #f3f4f6; padding: 8px; border-radius: 8px; }
         
-        /* Buttons */
         .btn-calc { 
             width: 100%; background-color: #16a34a; color: white; border: none; 
             padding: 18px; font-size: 18px; font-weight: bold; border-radius: 12px; 
@@ -57,7 +54,6 @@
         }
         .btn-calc:active { transform: translateY(4px); box-shadow: none; }
         
-        /* Red Reset Button */
         .btn-reset { 
             width: 100%; background-color: #dc2626; color: white; border: none; 
             padding: 15px; font-size: 16px; font-weight: bold; border-radius: 12px; 
@@ -70,79 +66,34 @@
         .result-title { color: #047857; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
         .result-date { color: #064e3b; font-size: 26px; font-weight: 800; line-height: 1.3; }
 
-        /* CREATOR FOOTER STYLES */
         .creator-footer {
-            background-color: #f0fdf4; 
-            border-top: 2px solid #bbf7d0;
-            padding: 30px 20px;
-            text-align: center;
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-color: #f0fdf4; border-top: 2px solid #bbf7d0; padding: 30px 20px; text-align: center; margin-top: auto; display: flex; flex-direction: column; align-items: center;
         }
-
         .profile-container {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 4px solid #16a34a; 
-            background-color: #e2e8f0;
-            margin-bottom: 15px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100px; height: 100px; border-radius: 50%; border: 4px solid #16a34a; background-color: #e2e8f0; margin-bottom: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
         .profile-container img { width: 100%; height: 100%; object-fit: cover; }
         .placeholder-icon { width: 50%; height: 50%; color: #94a3b8; }
-
         .created-by-text { font-size: 14px; color: #64748b; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
         .creator-name { font-size: 24px; font-weight: 800; color: #1f2937; margin: 0 0 2px 0; line-height: 1.2; }
         .creator-city { font-size: 20px; font-weight: 700; color: #4b5563; margin: 0 0 8px 0; }
         .creator-phone { font-size: 26px; font-weight: 900; color: #15803d; margin: 0; font-family: monospace; }
 
-        /* INSTALL BANNER STYLES */
+        /* INSTALL BANNER */
         #install-banner {
             display: none; /* Hidden by default */
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #1f2937; /* Dark Gray */
-            color: white;
-            padding: 15px;
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-            align-items: center;
-            justify-content: space-between;
-            animation: slideUp 0.5s ease-out;
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: #111827; color: white; padding: 12px 16px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.2); z-index: 2000;
+            align-items: center; justify-content: space-between;
         }
-
-        .install-text {
-            font-size: 16px;
-            font-weight: 600;
-        }
-
+        .install-text-group { display: flex; flex-direction: column; }
+        .install-title { font-weight: bold; font-size: 16px; }
+        .install-subtitle { font-size: 12px; color: #9ca3af; }
         .install-btn {
-            background-color: #ea580c;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
+            background-color: #ea580c; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; margin-left: 10px; white-space: nowrap;
         }
         
-        /* Hide Spinner */
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
     </style>
@@ -218,59 +169,58 @@
 
     <!-- INSTALL BANNER -->
     <div id="install-banner">
-        <div class="install-text">ਇਹ ਐਪ ਆਪਣੇ ਫੋਨ ਵਿੱਚ ਰੱਖੋ</div>
-        <button class="install-btn" onclick="installApp()">ਇੰਸਟਾਲ ਕਰੋ</button>
+        <div class="install-text-group">
+            <div class="install-title">ਐਪ ਇੰਸਟਾਲ ਕਰੋ</div>
+            <div class="install-subtitle">ਇੰਟਰਨੈੱਟ ਤੋਂ ਬਿਨਾਂ ਵਰਤਣ ਲਈ</div>
+        </div>
+        <button class="install-btn" onclick="installApp()">ਇੰਸਟਾਲ</button>
     </div>
 
     <script>
-        // --- INSTALL LOGIC ---
         let deferredPrompt;
         const installBanner = document.getElementById('install-banner');
 
         // Check if app is already installed
         if (window.matchMedia('(display-mode: standalone)').matches) {
              installBanner.style.display = 'none';
+        } else {
+            // Show banner initially to let user know it's installable
+             installBanner.style.display = 'flex';
         }
 
         window.addEventListener('beforeinstallprompt', (e) => {
-            // Prevent Chrome 67 and earlier from automatically showing the prompt
             e.preventDefault();
-            // Stash the event so it can be triggered later.
             deferredPrompt = e;
-            // Show the install banner
             installBanner.style.display = 'flex';
         });
 
         async function installApp() {
             if (deferredPrompt) {
-                // Show the prompt
                 deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
                 const { outcome } = await deferredPrompt.userChoice;
-                // We no longer need the prompt.  Clear it up.
                 deferredPrompt = null;
-                // Hide the banner
                 installBanner.style.display = 'none';
             } else {
-                // Fallback for iPhone or browsers that don't support automatic prompt
-                alert("ਆਈਫੋਨ (iPhone) ਵਾਲੇ ਵੀਰ 'Share' ਬਟਨ ਦਬਾ ਕੇ 'Add to Home Screen' ਕਰ ਲੈਣ।");
+                // Manual Instructions
+                const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
+                if (isIos) {
+                    alert("ਇੰਸਟਾਲ ਕਰਨ ਲਈ:\n1. ਥੱਲੇ 'Share' ਬਟਨ ਦਬਾਓ\n2. ਫਿਰ 'Add to Home Screen' ਚੁਣੋ।");
+                } else {
+                    alert("ਜੇਕਰ ਇੰਸਟਾਲ ਬਟਨ ਕੰਮ ਨਹੀਂ ਕਰ ਰਿਹਾ:\nਬ੍ਰਾਊਜ਼ਰ ਦੇ ਮੀਨੂ (3 ਬਿੰਦੀਆਂ) ਵਿੱਚ ਜਾਓ ਅਤੇ 'Install App' ਜਾਂ 'Add to Home Screen' 'ਤੇ ਕਲਿੱਕ ਕਰੋ।");
+                }
             }
         }
 
         window.addEventListener('appinstalled', () => {
-            // Hide the banner if installed
             installBanner.style.display = 'none';
-            deferredPrompt = null;
         });
 
-        // --- APP LOGIC ---
-        
-        // Service Worker
+        // SERVICE WORKER REGISTRATION
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./service-worker.js')
-                    .then(reg => console.log('SW registered'))
-                    .catch(err => console.log('SW fail', err));
+                    .then(reg => console.log('SW Success'))
+                    .catch(err => console.log('SW Fail', err));
             });
         }
 
