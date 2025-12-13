@@ -6,10 +6,10 @@
     <meta name="theme-color" content="#ea580c">
     <meta name="description" content="Karah Parshad Date Calculator">
     
-    <!-- ਲਿੰਕ ਮੈਨੀਫੈਸਟ ਫਾਈਲ ਨਾਲ -->
-    <link rel="manifest" href="./manifest.json">
+    <!-- ਮੈਨੀਫੈਸਟ ਫਾਈਲ ਲਿੰਕ -->
+    <link rel="manifest" href="manifest.json">
     
-    <!-- Browser Tab Icon -->
+    <!-- Browser Icons -->
     <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNlYTU4MGMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9Ijc1IiBmaWxsPSJ3aGl0ZSI+4Kqu4Kqs4KqP4KqAIOCqrOCqvOCqm+CqsOCqeTwvdGV4dD48L3N2Zz4=">
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNlYTU4MGMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9Ijc1IiBmaWxsPSJ3aGl0ZSI+4Kqu4Kqs4KqP4KqAIOCqrOCqvOCqm+CqsOCqeTwvdGV4dD48L3N2Zz4=">
 
@@ -19,7 +19,7 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #fff7ed;
-            margin: 0; padding: 15px; padding-bottom: 90px;
+            margin: 0; padding: 15px; 
             color: #374151;
             display: flex; justify-content: center; min-height: 100vh;
         }
@@ -78,21 +78,6 @@
         .creator-name { font-size: 24px; font-weight: 800; color: #1f2937; margin: 0 0 2px 0; line-height: 1.2; }
         .creator-city { font-size: 20px; font-weight: 700; color: #4b5563; margin: 0 0 8px 0; }
         .creator-phone { font-size: 26px; font-weight: 900; color: #15803d; margin: 0; font-family: monospace; }
-
-        /* INSTALL BANNER */
-        #install-banner {
-            display: none; /* Hidden by default */
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background-color: #111827; color: white; padding: 12px 16px;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.2); z-index: 2000;
-            align-items: center; justify-content: space-between;
-        }
-        .install-text-group { display: flex; flex-direction: column; }
-        .install-title { font-weight: bold; font-size: 16px; }
-        .install-subtitle { font-size: 12px; color: #9ca3af; }
-        .install-btn {
-            background-color: #ea580c; color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; margin-left: 10px; white-space: nowrap;
-        }
         
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         input[type=number] { -moz-appearance: textfield; }
@@ -167,54 +152,7 @@
         </div>
     </div>
 
-    <!-- INSTALL BANNER -->
-    <div id="install-banner">
-        <div class="install-text-group">
-            <div class="install-title">ਐਪ ਇੰਸਟਾਲ ਕਰੋ</div>
-            <div class="install-subtitle">ਇੰਟਰਨੈੱਟ ਤੋਂ ਬਿਨਾਂ ਵਰਤਣ ਲਈ</div>
-        </div>
-        <button class="install-btn" onclick="installApp()">ਇੰਸਟਾਲ</button>
-    </div>
-
     <script>
-        let deferredPrompt;
-        const installBanner = document.getElementById('install-banner');
-
-        // Check if app is already installed
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-             installBanner.style.display = 'none';
-        } else {
-            // Show banner initially to let user know it's installable
-             installBanner.style.display = 'flex';
-        }
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBanner.style.display = 'flex';
-        });
-
-        async function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                deferredPrompt = null;
-                installBanner.style.display = 'none';
-            } else {
-                // Manual Instructions
-                const isIos = /iPhone|iPad|iPod/.test(navigator.userAgent);
-                if (isIos) {
-                    alert("ਇੰਸਟਾਲ ਕਰਨ ਲਈ:\n1. ਥੱਲੇ 'Share' ਬਟਨ ਦਬਾਓ\n2. ਫਿਰ 'Add to Home Screen' ਚੁਣੋ।");
-                } else {
-                    alert("ਜੇਕਰ ਇੰਸਟਾਲ ਬਟਨ ਕੰਮ ਨਹੀਂ ਕਰ ਰਿਹਾ:\nਬ੍ਰਾਊਜ਼ਰ ਦੇ ਮੀਨੂ (3 ਬਿੰਦੀਆਂ) ਵਿੱਚ ਜਾਓ ਅਤੇ 'Install App' ਜਾਂ 'Add to Home Screen' 'ਤੇ ਕਲਿੱਕ ਕਰੋ।");
-                }
-            }
-        }
-
-        window.addEventListener('appinstalled', () => {
-            installBanner.style.display = 'none';
-        });
-
         // SERVICE WORKER REGISTRATION
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
