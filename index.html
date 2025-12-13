@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#ea580c">
     <meta name="description" content="Karah Parshad Date Calculator">
     
-    <!-- ਮੈਨੀਫੈਸਟ ਫਾਈਲ ਲਿੰਕ -->
-    <link rel="manifest" href="manifest.json">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./manifest.json">
     
-    <!-- Browser Icons -->
-    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNlYTU4MGMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9Ijc1IiBmaWxsPSJ3aGl0ZSI+4Kqu4Kqs4KqP4KqAIOCqrOCqvOCqm+CqsOCqeTwvdGV4dD48L3N2Zz4=">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIGZpbGw9IiNlYTU4MGMiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIiBmb250LXNpemU9Ijc1IiBmaWxsPSJ3aGl0ZSI+4Kqu4Kqs4KqP4KqAIOCqrOCqvOCqm+CqsOCqeTwvdGV4dD48L3N2Zz4=">
+    <!-- Icons (PNG Files) -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
 
     <title>ਪਰਚੀ ਹਿਸਾਬ</title>
     <style>
@@ -153,7 +153,7 @@
     </div>
 
     <script>
-        // SERVICE WORKER REGISTRATION
+        // SERVICE WORKER
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./service-worker.js')
