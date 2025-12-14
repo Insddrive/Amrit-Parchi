@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ea580c">
     <meta name="description" content="Karah Parshad Date Calculator">
-    
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon-192.png">
-
     <title>ਪਰਚੀ ਹਿਸਾਬ</title>
     <style>
         /* CSS Variables */
@@ -21,6 +19,7 @@
             --footer-bg: #f0fdf4; --footer-border: #bbf7d0;
             --footer-name: #1f2937; --footer-city: #4b5563;
             --shadow: 0 4px 20px rgba(0,0,0,0.08); --card-border: none; --divider: #e5e7eb;
+            --tab-inactive: #fed7aa; --tab-active-text: #ffffff; --tab-inactive-text: #9a3412;
         }
 
         /* SUPER AMOLED DARK MODE */
@@ -32,6 +31,7 @@
             --footer-bg: #000000; --footer-border: #333333;
             --footer-name: #ffffff; --footer-city: #d1d5db;
             --shadow: none; --card-border: 1px solid #333333; --divider: #333333;
+            --tab-inactive: #333333; --tab-inactive-text: #9ca3af;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -64,6 +64,27 @@
         }
 
         .content { padding: 20px; flex-grow: 1; }
+
+        /* TABS Styling */
+        .tabs-container {
+            display: flex; margin-bottom: 25px; background-color: var(--input-bg);
+            border-radius: 12px; padding: 5px; border: 1px solid var(--input-border);
+        }
+        .tab-btn {
+            flex: 1; padding: 12px; border: none; border-radius: 8px;
+            font-size: 15px; font-weight: bold; cursor: pointer;
+            background-color: transparent; color: var(--tab-inactive-text);
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background-color: var(--primary); color: var(--tab-active-text);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content { display: none; animation: fadeIn 0.3s ease-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
         .section-label { font-size: 16px; font-weight: 700; color: var(--heading-color); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
         
         .date-input-wrapper { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 5px; margin-bottom: 25px; }
@@ -113,13 +134,11 @@
         .profile-container { width: 100px; height: 100px; border-radius: 50%; border: 4px solid #16a34a; background-color: #e2e8f0; margin-bottom: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .profile-container img { width: 100%; height: 100%; object-fit: cover; }
         .placeholder-icon { width: 50%; height: 50%; color: #94a3b8; }
-        
         .created-by-text { font-size: 14px; color: #64748b; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
         .creator-name { font-size: 24px; font-weight: 800; color: var(--footer-name); margin: 0 0 2px 0; line-height: 1.2; }
         .creator-city { font-size: 20px; font-weight: 700; color: var(--footer-city); margin: 0 0 8px 0; }
         .creator-phone { font-size: 26px; font-weight: 900; color: #16a34a; margin: 0; font-family: monospace; }
         
-        /* INSTALL BANNER */
         #install-banner {
             display: none; position: fixed; bottom: 0; left: 0; width: 100%;
             background-color: #1f2937; color: white; padding: 12px 16px;
@@ -135,10 +154,7 @@
         .banner-actions { display: flex; align-items: center; gap: 10px; }
         .install-btn-banner { background-color: #ea580c; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; font-size: 14px; cursor: pointer; white-space: nowrap; }
         .close-btn { background: none; border: none; color: #9ca3af; cursor: pointer; padding: 5px; display: flex; align-items: center; }
-
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        input[type=number] { -moz-appearance: textfield; }
     </style>
 </head>
 <body>
@@ -156,6 +172,7 @@
         </div>
 
         <div class="content">
+            <!-- COMMON DATE INPUT (For both tabs) -->
             <div class="section-label">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 ਪਰਚੀ ਕੱਟਣ ਦੀ ਤਰੀਕ (ਅੱਜ)
@@ -164,42 +181,76 @@
                 <input type="date" id="startDate">
             </div>
 
-            <div class="section-label">
-                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                ਸਮਾਂ (ਮਿਆਦ)
-            </div>
-            
-            <div class="input-grid">
-                <div class="input-item">
-                    <label>ਸਾਲ</label>
-                    <input type="number" id="years" placeholder="0" inputmode="numeric">
-                </div>
-                <div class="input-item">
-                    <label>ਮਹੀਨੇ</label>
-                    <input type="number" id="months" placeholder="0" inputmode="numeric">
-                </div>
-                <div class="input-item">
-                    <label>ਦਿਨ</label>
-                    <input type="number" id="days" placeholder="0" inputmode="numeric">
-                </div>
+            <!-- TABS -->
+            <div class="tabs-container">
+                <button class="tab-btn active" onclick="switchTab('tab-date')">ਤਰੀਕ ਪਤਾ ਕਰੋ</button>
+                <button class="tab-btn" onclick="switchTab('tab-budget')">ਦਿਨ ਪਤਾ ਕਰੋ</button>
             </div>
 
-            <div class="amount-wrapper">
+            <!-- TAB 1: DATE CALCULATOR (Old Functionality) -->
+            <div id="tab-date" class="tab-content active">
                 <div class="section-label">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    ਕੁੱਲ ਰਕਮ (ਜੇਕਰ ਪਤਾ ਕਰਨੀ ਹੈ)
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    ਸਮਾਂ (ਮਿਆਦ)
                 </div>
-                <div class="amount-input-container">
-                    <span class="currency-symbol">₹</span>
-                    <input type="number" id="amount" class="amount-input" placeholder="0" inputmode="numeric">
+                
+                <div class="input-grid">
+                    <div class="input-item">
+                        <label>ਸਾਲ</label>
+                        <input type="number" id="years" placeholder="0" inputmode="numeric">
+                    </div>
+                    <div class="input-item">
+                        <label>ਮਹੀਨੇ</label>
+                        <input type="number" id="months" placeholder="0" inputmode="numeric">
+                    </div>
+                    <div class="input-item">
+                        <label>ਦਿਨ</label>
+                        <input type="number" id="days" placeholder="0" inputmode="numeric">
+                    </div>
                 </div>
+
+                <div class="amount-wrapper">
+                    <div class="section-label">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        ਕੁੱਲ ਰਕਮ (ਜੇਕਰ ਪਤਾ ਕਰਨੀ ਹੈ)
+                    </div>
+                    <div class="amount-input-container">
+                        <span class="currency-symbol">₹</span>
+                        <input type="number" id="amount" class="amount-input" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateDate()">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    ਹਿਸਾਬ ਲਗਾਓ
+                </button>
             </div>
 
-            <button class="btn-calc" onclick="calculateDate()">
-                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                ਹਿਸਾਬ ਲਗਾਓ
-            </button>
+            <!-- TAB 2: BUDGET CALCULATOR (New Functionality) -->
+            <div id="tab-budget" class="tab-content">
+                <div class="amount-wrapper">
+                    <div class="section-label">ਕੁੱਲ ਰਕਮ (Total)</div>
+                    <div class="amount-input-container">
+                        <span class="currency-symbol">₹</span>
+                        <input type="number" id="total_budget" class="amount-input" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
 
+                <div class="amount-wrapper">
+                    <div class="section-label">ਰੋਜ਼ਾਨਾ ਕਟੌਤੀ (Daily)</div>
+                    <div class="amount-input-container">
+                        <span class="currency-symbol">₹</span>
+                        <input type="number" id="daily_rate" class="amount-input" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateBudget()">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    ਪਤਾ ਕਰੋ (ਕਿੰਨੇ ਦਿਨ ਚੱਲਣਗੇ)
+                </button>
+            </div>
+
+            <!-- Result Area -->
             <div id="resultBox" class="result-area">
                 <div class="result-title">ਪਰਚੀ 'ਤੇ ਇਹ ਤਰੀਕ ਪਾਓ:</div>
                 <div id="resultDate" class="result-date"></div>
@@ -208,11 +259,11 @@
                 
                 <div class="extra-stats">
                     <div class="stat-box">
-                        <h4>ਕੁੱਲ ਦਿਨ ਬਣੇ</h4>
+                        <h4 id="statLabel1">ਕੁੱਲ ਦਿਨ ਬਣੇ</h4>
                         <div id="totalDays" class="stat-value">-</div>
                     </div>
                     <div class="stat-box">
-                        <h4>ਇੱਕ ਦਿਨ ਦਾ</h4>
+                        <h4 id="statLabel2">ਇੱਕ ਦਿਨ ਦਾ</h4>
                         <div id="costPerDay" class="stat-value">-</div>
                     </div>
                 </div>
@@ -254,6 +305,28 @@
     </div>
 
     <script>
+        // --- TAB SWITCHING ---
+        let currentTab = 'tab-date';
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            // Show selected
+            document.getElementById(tabId).classList.add('active');
+            
+            // Highlight button
+            const btns = document.querySelectorAll('.tab-btn');
+            if (tabId === 'tab-date') btns[0].classList.add('active');
+            else btns[1].classList.add('active');
+
+            // Reset results when switching
+            document.getElementById('resultBox').style.display = 'none';
+        }
+
+        // --- THEME ---
         function toggleTheme() {
             const body = document.body;
             body.classList.toggle('dark-mode');
@@ -274,12 +347,10 @@
             }
         }
 
-        // Initialize Theme
         function initTheme() {
             const stored = localStorage.getItem('darkMode');
-            // If stored is 'false', user wants Light. If 'null' (first time) or 'true', default to Dark.
+            // If stored is 'false', user wants Light. Default to Dark otherwise.
             const isDark = stored !== 'false';
-
             if (isDark) {
                 document.body.classList.add('dark-mode');
                 updateIcon(true);
@@ -293,10 +364,7 @@
         // --- INSTALL LOGIC ---
         let deferredPrompt;
         const installBanner = document.getElementById('install-banner');
-
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            installBanner.style.display = 'none';
-        }
+        if (window.matchMedia('(display-mode: standalone)').matches) installBanner.style.display = 'none';
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
@@ -312,33 +380,24 @@
                 installBanner.style.display = 'none';
             }
         }
-
-        function closeBanner() {
-            installBanner.style.display = 'none';
-        }
-
-        window.addEventListener('appinstalled', () => {
-            installBanner.style.display = 'none';
-        });
+        function closeBanner() { installBanner.style.display = 'none'; }
+        window.addEventListener('appinstalled', () => { installBanner.style.display = 'none'; });
 
         // --- APP LOGIC ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then(reg => console.log('SW Success'))
-                    .catch(err => console.log('SW Fail', err));
+                navigator.serviceWorker.register('./service-worker.js');
             });
         }
 
-        window.onload = function() { 
-            setTodayDate();
-        };
+        window.onload = function() { setTodayDate(); };
 
         function setTodayDate() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('startDate').value = today;
         }
 
+        // TAB 1 LOGIC: Duration -> Date
         function calculateDate() {
             const startDateVal = document.getElementById('startDate').value;
             const y = document.getElementById('years').value ? parseInt(document.getElementById('years').value) : 0;
@@ -350,8 +409,7 @@
             if (y === 0 && m === 0 && d === 0) return;
 
             const startDate = new Date(startDateVal);
-            const futureDate = new Date(startDateVal); 
-            
+            const futureDate = new Date(startDateVal);
             futureDate.setFullYear(futureDate.getFullYear() + y);
             futureDate.setMonth(futureDate.getMonth() + m);
             futureDate.setDate(futureDate.getDate() + d);
@@ -366,9 +424,11 @@
             if (amount > 0 && totalDays > 0) {
                 const cost = amount / totalDays;
                 costString = "₹" + cost.toFixed(2);
-            } else if (amount > 0 && totalDays === 0) {
-                costString = "-";
-            }
+            } else if (amount > 0 && totalDays === 0) costString = "-";
+
+            // Update Labels
+            document.getElementById('statLabel1').innerText = "ਕੁੱਲ ਦਿਨ ਬਣੇ";
+            document.getElementById('statLabel2').innerText = "ਇੱਕ ਦਿਨ ਦਾ";
 
             document.getElementById('resultDate').innerText = dateString;
             document.getElementById('totalDays').innerText = totalDays;
@@ -378,12 +438,51 @@
             document.getElementById('resultBox').scrollIntoView({behavior: 'smooth', block: 'nearest'});
         }
 
+        // TAB 2 LOGIC: Budget -> Days
+        function calculateBudget() {
+            const startDateVal = document.getElementById('startDate').value;
+            const total = document.getElementById('total_budget').value ? parseFloat(document.getElementById('total_budget').value) : 0;
+            const daily = document.getElementById('daily_rate').value ? parseFloat(document.getElementById('daily_rate').value) : 0;
+
+            if (!startDateVal) { alert("ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਤਰੀਕ ਚੁਣੋ।"); return; }
+            if (total <= 0 || daily <= 0) { alert("ਕਿਰਪਾ ਕਰਕੇ ਰਕਮ ਅਤੇ ਰੋਜ਼ਾਨਾ ਖਰਚਾ ਸਹੀ ਭਰੋ।"); return; }
+
+            // Calculate Days
+            const days = Math.floor(total / daily);
+            
+            // Calculate Future Date
+            const futureDate = new Date(startDateVal);
+            futureDate.setDate(futureDate.getDate() + days);
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            const dateString = futureDate.toLocaleDateString('pa-IN', options);
+
+            // Update Labels for this context
+            document.getElementById('statLabel1').innerText = "ਕੁੱਲ ਦਿਨ ਚੱਲਣਗੇ";
+            document.getElementById('statLabel2').innerText = "ਬਾਕੀ ਬਚੇ";
+            
+            // Remaining Amount
+            const remainder = (total % daily).toFixed(2);
+
+            document.getElementById('resultDate').innerText = dateString;
+            document.getElementById('totalDays').innerText = days;
+            document.getElementById('costPerDay').innerText = "₹" + remainder;
+            
+            document.getElementById('resultBox').style.display = 'block';
+            document.getElementById('resultBox').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+        }
+
         function resetForm() {
             setTodayDate();
+            // Reset Tab 1
             document.getElementById('years').value = '';
             document.getElementById('months').value = '';
             document.getElementById('days').value = '';
             document.getElementById('amount').value = '';
+            // Reset Tab 2
+            document.getElementById('total_budget').value = '';
+            document.getElementById('daily_rate').value = '';
+            
             document.getElementById('resultBox').style.display = 'none';
         }
     </script>
