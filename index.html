@@ -6,169 +6,111 @@
     <meta name="theme-color" content="#ea580c">
     <meta name="description" content="Karah Parshad Date Calculator">
     
-    <!-- ਮੈਨੀਫੈਸਟ ਫਾਈਲ -->
     <link rel="manifest" href="manifest.json">
-    
-    <!-- ਆਈਕਨ -->
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon-192.png">
 
     <title>ਪਰਚੀ ਹਿਸਾਬ</title>
     <style>
-        /* CSS Variables for Theming */
+        /* CSS Variables */
         :root {
-            --primary: #ea580c;
-            --bg-color: #fff7ed;
-            --card-bg: #ffffff;
-            --text-color: #374151;
-            --heading-color: #9a3412;
-            --input-bg: #f9fafb;
-            --input-border: #e5e7eb;
-            --input-text: #111827;
-            --helper-bg: #f3f4f6;
-            --helper-text: #6b7280;
-            --footer-bg: #f0fdf4;
-            --footer-border: #bbf7d0;
-            --footer-name: #1f2937;
-            --footer-city: #4b5563;
-            --shadow: 0 4px 20px rgba(0,0,0,0.08);
-            --card-border: none;
+            --primary: #ea580c; --bg-color: #fff7ed; --card-bg: #ffffff;
+            --text-color: #374151; --heading-color: #9a3412;
+            --input-bg: #f9fafb; --input-border: #e5e7eb; --input-text: #111827;
+            --helper-bg: #f3f4f6; --helper-text: #6b7280;
+            --footer-bg: #f0fdf4; --footer-border: #bbf7d0;
+            --footer-name: #1f2937; --footer-city: #4b5563;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08); --card-border: none; --divider: #e5e7eb;
         }
 
         /* SUPER AMOLED DARK MODE */
         .dark-mode {
-            --primary: #ea580c; /* Keep orange same or slightly darker if needed */
-            --bg-color: #000000; /* Pure Black */
-            --card-bg: #000000; /* Pure Black */
-            --text-color: #e5e5e5;
-            --heading-color: #fdba74;
-            --input-bg: #121212;
-            --input-border: #333333;
-            --input-text: #ffffff;
-            --helper-bg: #121212;
-            --helper-text: #9ca3af;
-            --footer-bg: #000000;
-            --footer-border: #333333;
-            --footer-name: #ffffff;
-            --footer-city: #d1d5db;
-            --shadow: none;
-            --card-border: 1px solid #333333; /* Border to define card in black */
+            --primary: #ea580c; --bg-color: #000000; --card-bg: #000000;
+            --text-color: #e5e5e5; --heading-color: #fdba74;
+            --input-bg: #121212; --input-border: #333333; --input-text: #ffffff;
+            --helper-bg: #121212; --helper-text: #9ca3af;
+            --footer-bg: #000000; --footer-border: #333333;
+            --footer-name: #ffffff; --footer-city: #d1d5db;
+            --shadow: none; --card-border: 1px solid #333333; --divider: #333333;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0; padding: 15px; 
-            padding-bottom: 90px;
-            color: var(--text-color);
+            background-color: var(--bg-color); margin: 0; padding: 15px; 
+            padding-bottom: 90px; color: var(--text-color);
             display: flex; justify-content: center; min-height: 100vh;
-            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
-            background-color: var(--card-bg); 
-            width: 100%; max-width: 500px;
-            border-radius: 16px; 
-            box-shadow: var(--shadow);
-            border: var(--card-border);
-            overflow: hidden; 
-            border-top: 6px solid var(--primary);
+            background-color: var(--card-bg); width: 100%; max-width: 500px;
+            border-radius: 16px; box-shadow: var(--shadow); border: var(--card-border);
+            overflow: hidden; border-top: 6px solid var(--primary);
             height: fit-content; display: flex; flex-direction: column;
-            transition: background-color 0.3s, border 0.3s;
         }
 
-        /* Header with Flexbox for Dark Mode Toggle */
         .header { 
-            background-color: var(--primary); 
-            color: white; padding: 20px; 
+            background-color: var(--primary); color: white; padding: 20px; 
             display: flex; justify-content: space-between; align-items: center;
         }
         .header-text { text-align: left; }
         .header h1 { margin: 0; font-size: 22px; font-weight: 700; }
         .header p { margin: 3px 0 0 0; font-size: 13px; opacity: 0.9; }
 
-        /* Dark Mode Toggle Button */
         .theme-toggle {
-            background: rgba(255,255,255,0.2);
-            border: none; cursor: pointer; color: white;
-            padding: 8px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s;
+            background: rgba(255,255,255,0.2); border: none; cursor: pointer; color: white;
+            padding: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
-        .theme-toggle:active { transform: scale(0.95); background: rgba(255,255,255,0.3); }
 
         .content { padding: 20px; flex-grow: 1; }
-        
         .section-label { font-size: 16px; font-weight: 700; color: var(--heading-color); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
         
-        .date-input-wrapper { 
-            background: var(--input-bg); 
-            border: 1px solid var(--input-border); 
-            border-radius: 12px; padding: 5px; margin-bottom: 25px; 
-        }
-        /* Filter allows SVG icon color change in date input */
+        .date-input-wrapper { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 5px; margin-bottom: 25px; }
         .dark-mode input[type="date"] { color-scheme: dark; }
-
-        input[type="date"] { 
-            width: 100%; padding: 12px; font-size: 18px; border: none; 
-            background: transparent; color: var(--input-text); font-family: inherit; 
-        }
+        input[type="date"] { width: 100%; padding: 12px; font-size: 18px; border: none; background: transparent; color: var(--input-text); font-family: inherit; }
         
         .input-grid { display: flex; gap: 12px; margin-bottom: 10px; }
         .input-item { flex: 1; display: flex; flex-direction: column; align-items: center; }
         .input-item label { font-size: 14px; font-weight: 600; color: var(--text-color); margin-bottom: 6px; }
-        
         .input-item input { 
             width: 100%; padding: 15px 5px; font-size: 22px; text-align: center; 
             border: 2px solid var(--input-border); border-radius: 12px; 
             font-weight: bold; color: var(--input-text); background-color: var(--input-bg);
-            transition: border-color 0.2s;
         }
         .input-item input:focus { outline: none; border-color: var(--primary); }
+
+        .amount-wrapper { margin-bottom: 25px; }
+        .amount-input-container { position: relative; }
+        .currency-symbol { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 20px; font-weight: bold; color: var(--heading-color); }
+        .amount-input { width: 100%; padding: 15px 15px 15px 40px; font-size: 22px; text-align: left; border: 2px solid var(--input-border); border-radius: 12px; font-weight: bold; color: var(--input-text); background-color: var(--input-bg); }
+        .amount-input:focus { outline: none; border-color: var(--primary); }
         
-        .helper-text { 
-            text-align: center; font-size: 13px; color: var(--helper-text); 
-            margin-bottom: 25px; background: var(--helper-bg); padding: 8px; border-radius: 8px; 
-        }
+        .helper-text { text-align: center; font-size: 13px; color: var(--helper-text); margin-bottom: 25px; background: var(--helper-bg); padding: 8px; border-radius: 8px; }
         
-        .btn-calc { 
-            width: 100%; background-color: #16a34a; color: white; border: none; 
-            padding: 18px; font-size: 18px; font-weight: bold; border-radius: 12px; 
-            cursor: pointer; display: flex; align-items: center; justify-content: center; 
-            gap: 8px; box-shadow: 0 4px 0 #15803d; margin-bottom: 15px;
-        }
+        .btn-calc { width: 100%; background-color: #16a34a; color: white; border: none; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 0 #15803d; margin-bottom: 15px; }
         .btn-calc:active { transform: translateY(4px); box-shadow: none; }
         
-        .btn-reset { 
-            width: 100%; background-color: #dc2626; color: white; border: none; 
-            padding: 15px; font-size: 16px; font-weight: bold; border-radius: 12px; 
-            cursor: pointer; display: flex; align-items: center; justify-content: center; 
-            gap: 8px; box-shadow: 0 4px 0 #991b1b;
-        }
+        .btn-reset { width: 100%; background-color: #dc2626; color: white; border: none; padding: 15px; font-size: 16px; font-weight: bold; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 0 #991b1b; }
         .btn-reset:active { transform: translateY(4px); box-shadow: none; }
         
         .result-area { margin-top: 30px; margin-bottom: 20px; background-color: #ecfdf5; border: 2px solid #34d399; border-radius: 12px; padding: 20px; text-align: center; display: none; }
-        /* Dark Mode Override for Result Area (Keep it green but readable) */
         .dark-mode .result-area { background-color: #064e3b; border-color: #059669; }
         
         .result-title { color: #047857; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
         .dark-mode .result-title { color: #a7f3d0; }
-
-        .result-date { color: #064e3b; font-size: 26px; font-weight: 800; line-height: 1.3; }
+        .result-date { color: #064e3b; font-size: 26px; font-weight: 800; line-height: 1.3; margin-bottom: 15px; }
         .dark-mode .result-date { color: #ffffff; }
 
-        .creator-footer {
-            background-color: var(--footer-bg); 
-            border-top: 2px solid var(--footer-border); 
-            padding: 30px 20px; text-align: center; margin-top: auto; 
-            display: flex; flex-direction: column; align-items: center;
-        }
-        
-        .profile-container {
-            width: 100px; height: 100px; border-radius: 50%; border: 4px solid #16a34a; background-color: #e2e8f0; margin-bottom: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+        .result-divider { height: 1px; background-color: #34d399; margin: 10px 0; opacity: 0.5; }
+        .extra-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; }
+        .stat-box h4 { margin: 0; font-size: 12px; color: #047857; text-transform: uppercase; }
+        .dark-mode .stat-box h4 { color: #a7f3d0; }
+        .stat-value { font-size: 20px; font-weight: 800; color: #064e3b; }
+        .dark-mode .stat-value { color: #fff; }
+
+        .creator-footer { background-color: var(--footer-bg); border-top: 2px solid var(--footer-border); padding: 30px 20px; text-align: center; margin-top: auto; display: flex; flex-direction: column; align-items: center; }
+        .profile-container { width: 100px; height: 100px; border-radius: 50%; border: 4px solid #16a34a; background-color: #e2e8f0; margin-bottom: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .profile-container img { width: 100%; height: 100%; object-fit: cover; }
         .placeholder-icon { width: 50%; height: 50%; color: #94a3b8; }
         
@@ -183,8 +125,7 @@
             background-color: #1f2937; color: white; padding: 12px 16px;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.3); z-index: 9999;
             align-items: center; justify-content: space-between;
-            animation: slideUp 0.5s ease-out;
-            border-top: 1px solid #374151;
+            animation: slideUp 0.5s ease-out; border-top: 1px solid #374151;
         }
         .install-info { display: flex; align-items: center; gap: 12px; }
         .app-icon-small { width: 40px; height: 40px; border-radius: 8px; }
@@ -208,11 +149,8 @@
                 <h1>ਕੜਾਹ ਪ੍ਰਸ਼ਾਦ ਕੈਲਕੁਲੇਟਰ</h1>
                 <p>ਸ੍ਰੀ ਦਰਬਾਰ ਸਾਹਿਬ, ਅੰਮ੍ਰਿਤਸਰ</p>
             </div>
-            <!-- Theme Toggle Button -->
             <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
-                <!-- Sun Icon (Default hidden) -->
                 <svg id="sun-icon" style="display:none;" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <!-- Moon Icon -->
                 <svg id="moon-icon" width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
             </button>
         </div>
@@ -246,18 +184,38 @@
                 </div>
             </div>
 
-            <div class="helper-text">
-                ਉਦਾਹਰਣ: ਸਵਾ ਸਾਲ ਲਈ <b>1 ਸਾਲ</b> ਅਤੇ <b>3 ਮਹੀਨੇ</b> ਭਰੋ।
+            <div class="amount-wrapper">
+                <div class="section-label">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    ਕੁੱਲ ਰਕਮ (ਜੇਕਰ ਪਤਾ ਕਰਨੀ ਹੈ)
+                </div>
+                <div class="amount-input-container">
+                    <span class="currency-symbol">₹</span>
+                    <input type="number" id="amount" class="amount-input" placeholder="0" inputmode="numeric">
+                </div>
             </div>
 
             <button class="btn-calc" onclick="calculateDate()">
                 <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                ਤਰੀਕ ਪਤਾ ਕਰੋ
+                ਹਿਸਾਬ ਲਗਾਓ
             </button>
 
             <div id="resultBox" class="result-area">
                 <div class="result-title">ਪਰਚੀ 'ਤੇ ਇਹ ਤਰੀਕ ਪਾਓ:</div>
                 <div id="resultDate" class="result-date"></div>
+                
+                <div class="result-divider"></div>
+                
+                <div class="extra-stats">
+                    <div class="stat-box">
+                        <h4>ਕੁੱਲ ਦਿਨ ਬਣੇ</h4>
+                        <div id="totalDays" class="stat-value">-</div>
+                    </div>
+                    <div class="stat-box">
+                        <h4>ਇੱਕ ਦਿਨ ਦਾ</h4>
+                        <div id="costPerDay" class="stat-value">-</div>
+                    </div>
+                </div>
             </div>
 
             <button class="btn-reset" onclick="resetForm()">
@@ -296,15 +254,11 @@
     </div>
 
     <script>
-        // --- DARK MODE LOGIC ---
         function toggleTheme() {
             const body = document.body;
             body.classList.toggle('dark-mode');
-            
-            // Save preference
             const isDark = body.classList.contains('dark-mode');
             localStorage.setItem('darkMode', isDark);
-            
             updateIcon(isDark);
         }
 
@@ -320,15 +274,21 @@
             }
         }
 
-        // Check preference on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const isDark = localStorage.getItem('darkMode') === 'true';
+        // Initialize Theme
+        function initTheme() {
+            const stored = localStorage.getItem('darkMode');
+            // If stored is 'false', user wants Light. If 'null' (first time) or 'true', default to Dark.
+            const isDark = stored !== 'false';
+
             if (isDark) {
                 document.body.classList.add('dark-mode');
                 updateIcon(true);
+            } else {
+                document.body.classList.remove('dark-mode');
+                updateIcon(false);
             }
-        });
-
+        }
+        initTheme();
 
         // --- INSTALL LOGIC ---
         let deferredPrompt;
@@ -372,12 +332,6 @@
 
         window.onload = function() { 
             setTodayDate();
-            // Re-check theme just in case onload fires after DOMContentLoaded
-            const isDark = localStorage.getItem('darkMode') === 'true';
-            if (isDark) {
-                document.body.classList.add('dark-mode');
-                updateIcon(true);
-            }
         };
 
         function setTodayDate() {
@@ -390,19 +344,36 @@
             const y = document.getElementById('years').value ? parseInt(document.getElementById('years').value) : 0;
             const m = document.getElementById('months').value ? parseInt(document.getElementById('months').value) : 0;
             const d = document.getElementById('days').value ? parseInt(document.getElementById('days').value) : 0;
+            const amount = document.getElementById('amount').value ? parseFloat(document.getElementById('amount').value) : 0;
 
             if (!startDateVal) { alert("ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਤਰੀਕ ਚੁਣੋ।"); return; }
             if (y === 0 && m === 0 && d === 0) return;
 
-            const date = new Date(startDateVal);
-            date.setFullYear(date.getFullYear() + y);
-            date.setMonth(date.getMonth() + m);
-            date.setDate(date.getDate() + d);
+            const startDate = new Date(startDateVal);
+            const futureDate = new Date(startDateVal); 
+            
+            futureDate.setFullYear(futureDate.getFullYear() + y);
+            futureDate.setMonth(futureDate.getMonth() + m);
+            futureDate.setDate(futureDate.getDate() + d);
 
             const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-            const dateString = date.toLocaleDateString('pa-IN', options);
+            const dateString = futureDate.toLocaleDateString('pa-IN', options);
+
+            const timeDiff = futureDate.getTime() - startDate.getTime();
+            const totalDays = Math.round(timeDiff / (1000 * 3600 * 24));
+
+            let costString = "ਭਰੋ";
+            if (amount > 0 && totalDays > 0) {
+                const cost = amount / totalDays;
+                costString = "₹" + cost.toFixed(2);
+            } else if (amount > 0 && totalDays === 0) {
+                costString = "-";
+            }
 
             document.getElementById('resultDate').innerText = dateString;
+            document.getElementById('totalDays').innerText = totalDays;
+            document.getElementById('costPerDay').innerText = costString;
+            
             document.getElementById('resultBox').style.display = 'block';
             document.getElementById('resultBox').scrollIntoView({behavior: 'smooth', block: 'nearest'});
         }
@@ -412,6 +383,7 @@
             document.getElementById('years').value = '';
             document.getElementById('months').value = '';
             document.getElementById('days').value = '';
+            document.getElementById('amount').value = '';
             document.getElementById('resultBox').style.display = 'none';
         }
     </script>
