@@ -182,14 +182,39 @@
                 <input type="date" id="startDate">
             </div>
 
-            <!-- TABS -->
+            <!-- TABS (SWAPPED ORDER) -->
             <div class="tabs-container">
-                <button class="tab-btn active" onclick="switchTab('tab-date')">ਤਰੀਕ ਪਤਾ ਕਰੋ</button>
-                <button class="tab-btn" onclick="switchTab('tab-budget')">ਦਿਨ ਪਤਾ ਕਰੋ</button>
+                <!-- Swapped: Budget (Days) first, Date second -->
+                <button class="tab-btn active" onclick="switchTab('tab-budget')">ਦਿਨ ਪਤਾ ਕਰੋ</button>
+                <button class="tab-btn" onclick="switchTab('tab-date')">ਤਰੀਕ ਪਤਾ ਕਰੋ</button>
             </div>
 
-            <!-- TAB 1: DATE CALCULATOR -->
-            <div id="tab-date" class="tab-content active">
+            <!-- TAB 1: BUDGET CALCULATOR (MOVED TO FIRST POSITION) -->
+            <div id="tab-budget" class="tab-content active">
+                <div class="amount-wrapper">
+                    <div class="section-label">ਕੁੱਲ ਰਕਮ (Total)</div>
+                    <div class="amount-input-container">
+                        <span class="currency-symbol">₹</span>
+                        <input type="number" id="total_budget" class="amount-input" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <div class="amount-wrapper">
+                    <div class="section-label">ਰੋਜ਼ਾਨਾ ਕਟੌਤੀ (Daily)</div>
+                    <div class="amount-input-container">
+                        <span class="currency-symbol">₹</span>
+                        <input type="number" id="daily_rate" class="amount-input" placeholder="0" inputmode="numeric">
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="calculateBudget()">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    ਪਤਾ ਕਰੋ (ਕਿੰਨੇ ਦਿਨ ਚੱਲਣਗੇ)
+                </button>
+            </div>
+
+            <!-- TAB 2: DATE CALCULATOR (MOVED TO SECOND POSITION) -->
+            <div id="tab-date" class="tab-content">
                 <div class="section-label">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     ਸਮਾਂ (ਮਿਆਦ)
@@ -227,30 +252,6 @@
                 </button>
             </div>
 
-            <!-- TAB 2: BUDGET CALCULATOR -->
-            <div id="tab-budget" class="tab-content">
-                <div class="amount-wrapper">
-                    <div class="section-label">ਕੁੱਲ ਰਕਮ (Total)</div>
-                    <div class="amount-input-container">
-                        <span class="currency-symbol">₹</span>
-                        <input type="number" id="total_budget" class="amount-input" placeholder="0" inputmode="numeric">
-                    </div>
-                </div>
-
-                <div class="amount-wrapper">
-                    <div class="section-label">ਰੋਜ਼ਾਨਾ ਕਟੌਤੀ (Daily)</div>
-                    <div class="amount-input-container">
-                        <span class="currency-symbol">₹</span>
-                        <input type="number" id="daily_rate" class="amount-input" placeholder="0" inputmode="numeric">
-                    </div>
-                </div>
-
-                <button class="btn-calc" onclick="calculateBudget()">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                    ਪਤਾ ਕਰੋ (ਕਿੰਨੇ ਦਿਨ ਚੱਲਣਗੇ)
-                </button>
-            </div>
-
             <!-- Result Area -->
             <div id="resultBox" class="result-area">
                 <div class="result-title">ਪਰਚੀ 'ਤੇ ਇਹ ਤਰੀਕ ਪਾਓ:</div>
@@ -285,7 +286,7 @@
             <h2 class="creator-name">ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
             <h3 class="creator-city">ਤਲਵੰਡੀ ਸਾਬੋ</h3>
             <h2 class="creator-phone">94644-91806</h2>
-            <div class="version-text">v7.0</div>
+            <div class="version-text">v8.0</div>
         </div>
     </div>
 
@@ -308,7 +309,8 @@
 
     <script>
         // --- TAB SWITCHING ---
-        let currentTab = 'tab-date';
+        // Changed initial tab to 'tab-budget' (Find Days)
+        let currentTab = 'tab-budget';
 
         function switchTab(tabId) {
             currentTab = tabId;
@@ -317,7 +319,10 @@
             document.getElementById(tabId).classList.add('active');
             
             const btns = document.querySelectorAll('.tab-btn');
-            if (tabId === 'tab-date') btns[0].classList.add('active');
+            // Logic updated for swapped buttons
+            // Button 0 is now 'tab-budget' (Din Pata Karo)
+            // Button 1 is now 'tab-date' (Tarik Pata Karo)
+            if (tabId === 'tab-budget') btns[0].classList.add('active');
             else btns[1].classList.add('active');
 
             document.getElementById('resultBox').style.display = 'none';
@@ -393,7 +398,7 @@
             document.getElementById('startDate').value = today;
         }
 
-        // TAB 1 LOGIC
+        // TAB LOGIC (Functions remain same, just UI position swapped)
         function calculateDate() {
             const startDateVal = document.getElementById('startDate').value;
             const y = document.getElementById('years').value ? parseInt(document.getElementById('years').value) : 0;
@@ -433,7 +438,6 @@
             document.getElementById('resultBox').scrollIntoView({behavior: 'smooth', block: 'nearest'});
         }
 
-        // TAB 2 LOGIC
         function calculateBudget() {
             const startDateVal = document.getElementById('startDate').value;
             const total = document.getElementById('total_budget').value ? parseFloat(document.getElementById('total_budget').value) : 0;
@@ -476,5 +480,4 @@
     </script>
 </body>
 </html>
-
 
