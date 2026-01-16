@@ -1,5 +1,5 @@
-// ਵਰਜਨ v7 ਕਰ ਦਿੱਤਾ ਹੈ - ਹੁਣ ਕਰੋਮ ਨੂੰ ਪੁਰਾਣਾ ਛੱਡਣਾ ਹੀ ਪਵੇਗਾ
-const CACHE_NAME = 'karah-parshad-v7'; 
+// ਵਰਜਨ v8 ਕਰ ਦਿੱਤਾ ਹੈ - ਹੁਣ ਕਰੋਮ ਨੂੰ ਪੁਰਾਣਾ ਛੱਡਣਾ ਹੀ ਪਵੇਗਾ
+const CACHE_NAME = 'karah-parshad-v8'; 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -39,7 +39,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            // ਪੁਰਾਣਾ ਕੈਸ਼ (v6, v5 ਆਦਿ) ਡਿਲੀਟ ਕਰੋ
+            // ਪੁਰਾਣਾ ਕੈਸ਼ (v7, v6 ਆਦਿ) ਡਿਲੀਟ ਕਰੋ
             return caches.delete(cacheName);
           }
         })
@@ -48,5 +48,3 @@ self.addEventListener('activate', (event) => {
   );
   return self.clients.claim();
 });
-
-
