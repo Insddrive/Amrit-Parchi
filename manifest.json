@@ -3,7 +3,7 @@
     "short_name": "ਪਰਚੀ ਹਿਸਾਬ",
     "start_url": "./index.html",
     "display": "standalone",
-    "background_color": "#fff7ed",
+    "background_color": "#000000",
     "theme_color": "#ea580c",
     "orientation": "portrait",
     "icons": [
@@ -19,5 +19,3 @@
         }
     ]
 }
-
-
