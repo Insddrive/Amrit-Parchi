@@ -1,21 +1,20 @@
 {
-    "name": "ਕੜਾਹ ਪ੍ਰਸ਼ਾਦ ਕੈਲਕੁਲੇਟਰ",
-    "short_name": "ਪਰਚੀ ਹਿਸਾਬ",
-    "start_url": "./index.html",
-    "display": "standalone",
-    "background_color": "#000000",
-    "theme_color": "#ea580c",
-    "orientation": "portrait",
-    "icons": [
-        {
-            "src": "icon-192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "icon-512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ]
+  "name": "ਪਰਚੀ ਹਿਸਾਬ v13",
+  "short_name": "ਪਰਚੀ v13",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#ea580c",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1048/1048953.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1048/1048953.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
