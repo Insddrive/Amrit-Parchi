@@ -1,29 +1,34 @@
-const CACHE_NAME = 'karah-parshad-v12'; 
-const ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './profile.jpg'
+// ਕੈਸ਼ ਦਾ ਨਾਮ ਬਦਲ ਕੇ v13 ਕੀਤਾ ਗਿਆ ਤਾਂ ਕਿ ਬ੍ਰਾਊਜ਼ਰ ਨਵੀਂ ਫਾਈਲ ਲੋਡ ਕਰੇ
+const CACHE_NAME = 'parchi-cache-v13';
+const assets = [
+  'index.html',
+  'manifest.json'
 ];
 
-self.addEventListener('install', (e) => {
-  self.skipWaiting(); 
-  e.waitUntil(caches.open(CACHE_NAME).then((c) => c.addAll(ASSETS)));
-});
-
-self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(keys.map((k) => {
-        if (k !== CACHE_NAME) return caches.delete(k);
-      }));
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(assets);
     })
   );
-  return self.clients.claim();
+  self.skipWaiting();
 });
 
-self.addEventListener('fetch', (e) => {
-  e.respondWith(caches.match(e.request).then((res) => res || fetch(e.request)));
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.filter(key => key !== CACHE_NAME)
+            .map(key => caches.delete(key))
+      );
+    })
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
+  );
 });
