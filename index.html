@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ea580c">
     <link rel="manifest" href="manifest.json">
-    <title>ਪਰਚੀ ਹਿਸਾਬ v12</title>
+    <title>ਪਰਚੀ ਹਿਸਾਬ v13</title>
     <style>
         /* DEFAULT DARK MODE (SUPER AMOLED) */
         :root {
@@ -134,7 +134,7 @@
             <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
             <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
             <a href="tel:9464491806" class="tel">94644-91806</a>
-            <div style="font-size:9px; margin-top:10px; opacity:0.4;">Version 12.0</div>
+            <div style="font-size:9px; margin-top:10px; opacity:0.4;">Version 13.0</div>
         </div>
     </div>
 
@@ -146,8 +146,17 @@
     <script>
         let currentTab = 'days';
 
+        // ਅੱਜ ਦੀ ਸਹੀ ਤਰੀਕ ਸੈੱਟ ਕਰਨ ਲਈ ਫੰਕਸ਼ਨ
+        function setToday() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('startDate').value = `${yyyy}-${mm}-${dd}`;
+        }
+
         window.onload = () => {
-            document.getElementById('startDate').value = new Date().toISOString().split('T')[0];
+            setToday(); // ਰੀਫ੍ਰੈਸ਼ ਕਰਨ 'ਤੇ ਸਹੀ ਤਰੀਕ ਸੈੱਟ ਹੋਵੇਗੀ
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
                 document.body.classList.remove('dark-mode');
@@ -212,7 +221,7 @@
         }
 
         function resetApp() {
-            document.getElementById('startDate').value = new Date().toISOString().split('T')[0];
+            setToday(); // ਰੀਸੈੱਟ ਕਰਨ 'ਤੇ ਵੀ ਸਹੀ ਤਰੀਕ ਸੈੱਟ ਹੋਵੇਗੀ
             document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
             document.getElementById('resBox').style.display = 'none';
         }
@@ -236,5 +245,4 @@
     </script>
 </body>
 </html>
-
 
