@@ -2,133 +2,239 @@
 <html lang="pa">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ਪਰਚੀ ਕਾਊਂਟਰ - ਵਰਜ਼ਨ 2.0</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ea580c">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#4A90E2">
+    <title>ਪਰਚੀ ਹਿਸਾਬ v12</title>
     <style>
+        /* DEFAULT DARK MODE (SUPER AMOLED) */
         :root {
-            --primary-color: #4A90E2;
-            --bg-color: #f4f7f6;
+            --p: #ea580c; --bg: #000000; --card: #121212;
+            --txt: #e5e7eb; --head: #fdba74;
+            --in-bg: #1a1a1a; --in-br: #333333;
+            --res-bg: #064e3b; --res-br: #059669;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
+        .light-mode {
+            --bg: #fff7ed; --card: #ffffff;
+            --txt: #374151; --head: #9a3412;
+            --in-bg: #f9fafb; --in-br: #e5e7eb;
+            --res-bg: #ecfdf5; --res-br: #34d399;
         }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        h2 {
-            text-align: center;
-            color: var(--primary-color);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .btn:hover {
-            background-color: #357abd;
-        }
-        .version-tag {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #888;
-            text-align: center;
-        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: system-ui, -apple-system, sans-serif; }
+        body { background-color: var(--bg); margin: 0; padding: 10px; color: var(--txt); display: flex; justify-content: center; min-height: 100vh; transition: 0.2s; }
+        
+        .app { background: var(--card); width: 100%; max-width: 420px; border-radius: 12px; border-top: 5px solid var(--p); height: fit-content; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; }
+        
+        .header { background: var(--p); color: white; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { margin: 0; font-size: 19px; font-weight: 800; }
+        .header p { margin: 0; font-size: 11px; opacity: 0.9; }
+
+        .content { padding: 15px; }
+        
+        .tab-box { display: flex; background: var(--in-bg); border-radius: 8px; padding: 3px; margin-bottom: 15px; border: 1px solid var(--in-br); }
+        .tab-btn { flex: 1; border: none; padding: 9px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; background: transparent; color: var(--txt); transition: 0.2s; }
+        .tab-btn.active { background: var(--p); color: white; }
+
+        .label { font-size: 13px; font-weight: 700; color: var(--head); margin-bottom: 5px; }
+        .input-wrap { margin-bottom: 12px; }
+        input { width: 100%; padding: 11px; font-size: 16px; border: 2px solid var(--in-br); border-radius: 8px; background: var(--in-bg); color: var(--txt); font-weight: 600; outline: none; }
+        input:focus { border-color: var(--p); }
+
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        .grid-3 input { text-align: center; }
+
+        .btn-main { width: 100%; background: #16a34a; color: white; border: none; padding: 15px; font-size: 17px; font-weight: 800; border-radius: 10px; cursor: pointer; margin-top: 5px; box-shadow: 0 4px 0 #15803d; }
+        .btn-main:active { transform: translateY(2px); box-shadow: 0 2px 0 #15803d; }
+
+        /* Larger Reset Button */
+        .btn-reset { width: 100%; background: #dc2626; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 700; border-radius: 10px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 0 #991b1b; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-reset:active { transform: translateY(2px); box-shadow: 0 2px 0 #991b1b; }
+
+        .result { margin-top: 15px; background: var(--res-bg); border: 2px solid var(--res-br); border-radius: 10px; padding: 12px; text-align: center; display: none; }
+        .res-date { font-size: 21px; font-weight: 800; margin: 5px 0; color: var(--p); }
+        .res-stats { display: flex; justify-content: space-around; border-top: 1px solid var(--res-br); padding-top: 8px; margin-top: 8px; font-size: 15px; font-weight: 700; }
+
+        .footer { background: var(--in-bg); padding: 15px; text-align: center; border-top: 1px solid var(--in-br); }
+        .prof { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #16a34a; margin-bottom: 8px; object-fit: cover; }
+        .footer h2 { margin: 0; font-size: 19px; color: var(--txt); }
+        .footer p { margin: 2px 0; font-size: 13px; opacity: 0.8; }
+        .footer .tel { font-size: 21px; color: #16a34a; font-weight: 900; margin-top: 5px; display: block; text-decoration: none; }
+
+        #install-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1f2937; color: white; padding: 10px 15px; align-items: center; justify-content: space-between; font-size: 14px; z-index: 100; border-top: 1px solid #374151; }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.8); }
+        .light-mode input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0); }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
-<div class="container">
-    <h2>ਪਰਚੀ ਕਾਊਂਟਰ</h2>
-    
-    <div class="form-group">
-        <label for="dateInput">ਅੱਜ ਦੀ ਤਰੀਕ:</label>
-        <!-- ਤਰੀਕ ਦਾ ਇਨਪੁਟ -->
-        <input type="date" id="dateInput">
+    <div class="app">
+        <div class="header">
+            <div>
+                <h1>ਪਰਚੀ ਹਿਸਾਬ</h1>
+                <p>ਸ੍ਰੀ ਦਰਬਾਰ ਸਾਹਿਬ, ਅੰਮ੍ਰਿਤਸਰ</p>
+            </div>
+            <button onclick="toggleTheme()" id="themeBtn" style="background:rgba(255,255,255,0.2); border:none; border-radius:50%; width:38px; height:38px; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+                <svg id="moon-icon" width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <svg id="sun-icon" style="display:none;" width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path></svg>
+            </button>
+        </div>
+
+        <div class="content">
+            <div class="input-wrap">
+                <div class="label">ਪਰਚੀ ਦੀ ਤਰੀਕ (ਅੱਜ)</div>
+                <input type="date" id="startDate">
+            </div>
+
+            <div class="tab-box">
+                <button class="tab-btn active" id="btn-days" onclick="switchTab('days')">ਦਿਨ ਪਤਾ ਕਰੋ</button>
+                <button class="tab-btn" id="btn-date" onclick="switchTab('date')">ਤਰੀਕ ਪਤਾ ਕਰੋ</button>
+            </div>
+
+            <div id="view-days">
+                <div class="input-wrap">
+                    <div class="label">ਕੁੱਲ ਰਕਮ (Total ₹)</div>
+                    <input type="number" id="t_budget" placeholder="0" inputmode="numeric">
+                </div>
+                <div class="input-wrap">
+                    <div class="label">ਰੋਜ਼ਾਨਾ ਕਟੌਤੀ (Daily ₹)</div>
+                    <input type="number" id="d_rate" placeholder="0" inputmode="numeric">
+                </div>
+            </div>
+
+            <div id="view-date" style="display:none;">
+                <div class="grid-3 input-wrap">
+                    <div><div class="label">ਸਾਲ</div><input type="number" id="yy" placeholder="0"></div>
+                    <div><div class="label">ਮਹੀਨੇ</div><input type="number" id="mm" placeholder="0"></div>
+                    <div><div class="label">ਦਿਨ</div><input type="number" id="dd" placeholder="0"></div>
+                </div>
+                <div class="input-wrap">
+                    <div class="label">ਕੁੱਲ ਰਕਮ (ਜੇਕਰ ਪਤਾ ਕਰਨੀ ਹੈ ₹)</div>
+                    <input type="number" id="t_amt" placeholder="0" inputmode="numeric">
+                </div>
+            </div>
+
+            <button class="btn-main" onclick="calculate()">ਹਿਸਾਬ ਲਗਾਓ</button>
+
+            <div id="resBox" class="result">
+                <div style="font-size:12px; font-weight:700; opacity:0.8;">ਨਤੀਜਾ (ਪਰਚੀ 'ਤੇ ਇਹ ਤਰੀਕ ਪਾਓ):</div>
+                <div id="resDate" class="res-date"></div>
+                <div id="resStats" class="res-stats"></div>
+            </div>
+
+            <button class="btn-reset" onclick="resetApp()">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                ਰੀਸੈੱਟ ਕਰੋ
+            </button>
+        </div>
+
+        <div class="footer">
+            <img src="profile.jpg" class="prof" onerror="this.src='https://via.placeholder.com/60'">
+            <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
+            <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
+            <a href="tel:9464491806" class="tel">94644-91806</a>
+            <div style="font-size:9px; margin-top:10px; opacity:0.4;">Version 12.0</div>
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="customerName">ਗਾਹਕ ਦਾ ਨਾਮ:</label>
-        <input type="text" id="customerName" placeholder="ਨਾਮ ਲਿਖੋ...">
+    <div id="install-bar">
+        <span>ਐਪ ਫੋਨ ਵਿੱਚ ਸੇਵ ਕਰੋ</span>
+        <button onclick="installApp()" style="background:var(--p); color:white; border:none; padding:6px 15px; border-radius:20px; font-weight:bold;">ਇੰਸਟਾਲ</button>
     </div>
 
-    <button class="btn" onclick="printReceipt()">ਪਰਚੀ ਪ੍ਰਿੰਟ ਕਰੋ</button>
-    
-    <div class="version-tag">ਵਰਜ਼ਨ: 2.0.1 (ਬੱਗ ਫਿਕਸ)</div>
-</div>
+    <script>
+        let currentTab = 'days';
 
-<script>
-    // ਤਰੀਕ ਦੀ ਸਮੱਸਿਆ ਨੂੰ ਠੀਕ ਕਰਨ ਲਈ ਫੰਕਸ਼ਨ
-    function setTodayDate() {
-        const dateInput = document.getElementById('dateInput');
-        const now = new Date();
-        
-        // Local Time Zone ਮੁਤਾਬਕ ਤਰੀਕ ਕੱਢਣਾ
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        
-        const today = `${year}-${month}-${day}`;
-        dateInput.value = today;
-    }
+        window.onload = () => {
+            document.getElementById('startDate').value = new Date().toISOString().split('T')[0];
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.remove('dark-mode');
+                document.body.classList.add('light-mode');
+                updateThemeIcons(true);
+            } else {
+                updateThemeIcons(false);
+            }
+        };
 
-    // ਪੇਜ ਲੋਡ ਹੁੰਦੇ ਹੀ ਤਰੀਕ ਸੈੱਟ ਕਰੋ
-    window.onload = function() {
-        setTodayDate();
-        
-        // ਸਰਵਿਸ ਵਰਕਰ ਰਜਿਸਟਰ ਕਰਨਾ
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-            .then(() => console.log("Service Worker Registered"))
-            .catch(err => console.log("Service Worker Failed", err));
+        function toggleTheme() {
+            const isLight = document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            updateThemeIcons(isLight);
         }
-    };
 
-    function printReceipt() {
-        const date = document.getElementById('dateInput').value;
-        const name = document.getElementById('customerName').value;
-        if(!name) {
-            alert("ਕਿਰਪਾ ਕਰਕੇ ਗਾਹਕ ਦਾ ਨਾਮ ਭਰੋ");
-            return;
+        function updateThemeIcons(isLight) {
+            document.getElementById('sun-icon').style.display = isLight ? 'block' : 'none';
+            document.getElementById('moon-icon').style.display = isLight ? 'none' : 'block';
         }
-        alert("ਪਰਚੀ ਕੱਟੀ ਗਈ: " + name + "\nਤਰੀਕ: " + date);
-    }
-</script>
 
+        function switchTab(t) {
+            currentTab = t;
+            document.getElementById('view-days').style.display = t === 'days' ? 'block' : 'none';
+            document.getElementById('view-date').style.display = t === 'date' ? 'block' : 'none';
+            document.getElementById('btn-days').classList.toggle('active', t === 'days');
+            document.getElementById('btn-date').classList.toggle('active', t === 'date');
+            document.getElementById('resBox').style.display = 'none';
+        }
+
+        function calculate() {
+            const startVal = document.getElementById('startDate').value;
+            if (!startVal) return alert("ਤਰੀਕ ਚੁਣੋ");
+            const start = new Date(startVal);
+            let finalDate = new Date(start);
+            let statsHtml = "";
+
+            if (currentTab === 'days') {
+                const total = parseFloat(document.getElementById('t_budget').value) || 0;
+                const daily = parseFloat(document.getElementById('d_rate').value) || 0;
+                if (total <= 0 || daily <= 0) return alert("ਰਕਮ ਸਹੀ ਭਰੋ");
+                const days = Math.floor(total / daily);
+                finalDate.setDate(finalDate.getDate() + days);
+                statsHtml = `<div>ਦਿਨ: ${days}</div><div>ਬਾਕੀ: ₹${(total % daily).toFixed(2)}</div>`;
+            } else {
+                const y = parseInt(document.getElementById('yy').value) || 0;
+                const m = parseInt(document.getElementById('mm').value) || 0;
+                const d = parseInt(document.getElementById('dd').value) || 0;
+                const amt = parseFloat(document.getElementById('t_amt').value) || 0;
+                finalDate.setFullYear(finalDate.getFullYear() + y);
+                finalDate.setMonth(finalDate.getMonth() + m);
+                finalDate.setDate(finalDate.getDate() + d);
+                const diff = Math.round((finalDate - start) / (1000 * 3600 * 24));
+                statsHtml = `<div>ਕੁੱਲ ਦਿਨ: ${diff}</div>`;
+                if (amt > 0 && diff > 0) statsHtml += `<div>ਰੋਜ਼ਾਨਾ: ₹${(amt / diff).toFixed(2)}</div>`;
+            }
+
+            document.getElementById('resDate').innerText = finalDate.toLocaleDateString('pa-IN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+            document.getElementById('resStats').innerHTML = statsHtml;
+            document.getElementById('resBox').style.display = 'block';
+            document.getElementById('resBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function resetApp() {
+            document.getElementById('startDate').value = new Date().toISOString().split('T')[0];
+            document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
+            document.getElementById('resBox').style.display = 'none';
+        }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('install-bar').style.display = 'flex';
+        });
+
+        async function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt = null;
+                document.getElementById('install-bar').style.display = 'none';
+            }
+        }
+
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
+    </script>
 </body>
 </html>
+
 
