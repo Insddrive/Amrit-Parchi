@@ -1,5 +1,4 @@
-// ਕੈਸ਼ ਦਾ ਨਾਮ ਬਦਲ ਕੇ v13 ਕੀਤਾ ਗਿਆ ਤਾਂ ਕਿ ਬ੍ਰਾਊਜ਼ਰ ਨਵੀਂ ਫਾਈਲ ਲੋਡ ਕਰੇ
-const CACHE_NAME = 'parchi-cache-v13';
+const CACHE_NAME = 'parchi-cache-v16';
 const assets = [
   'index.html',
   'manifest.json'
