@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ea580c">
     <link rel="manifest" href="manifest.json">
-    <title>ਪਰਚੀ ਹਿਸਾਬ v13</title>
+    <title>ਪਰਚੀ ਹਿਸਾਬ v16</title>
     <style>
         /* DEFAULT DARK MODE (SUPER AMOLED) */
         :root {
@@ -13,12 +13,14 @@
             --txt: #e5e7eb; --head: #fdba74;
             --in-bg: #1a1a1a; --in-br: #333333;
             --res-bg: #064e3b; --res-br: #059669;
+            --box-bg: rgba(0, 0, 0, 0.2);
         }
         .light-mode {
             --bg: #fff7ed; --card: #ffffff;
             --txt: #374151; --head: #9a3412;
             --in-bg: #f9fafb; --in-br: #e5e7eb;
             --res-bg: #ecfdf5; --res-br: #34d399;
+            --box-bg: rgba(255, 255, 255, 0.6);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: system-ui, -apple-system, sans-serif; }
@@ -27,33 +29,46 @@
         .app { background: var(--card); width: 100%; max-width: 420px; border-radius: 12px; border-top: 5px solid var(--p); height: fit-content; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; }
         
         .header { background: var(--p); color: white; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { margin: 0; font-size: 19px; font-weight: 800; }
+        .header h1 { margin: 0; font-size: 19px; font-weight: 800; letter-spacing: 0.5px; }
         .header p { margin: 0; font-size: 11px; opacity: 0.9; }
 
         .content { padding: 15px; }
         
-        .tab-box { display: flex; background: var(--in-bg); border-radius: 8px; padding: 3px; margin-bottom: 15px; border: 1px solid var(--in-br); }
-        .tab-btn { flex: 1; border: none; padding: 9px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; background: transparent; color: var(--txt); transition: 0.2s; }
-        .tab-btn.active { background: var(--p); color: white; }
+        .tab-box { display: flex; background: var(--in-bg); border-radius: 8px; padding: 4px; margin-bottom: 15px; border: 1px solid var(--in-br); }
+        .tab-btn { flex: 1; border: none; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; background: transparent; color: var(--txt); transition: 0.2s; }
+        .tab-btn.active { background: var(--p); color: white; box-shadow: 0 2px 5px rgba(234, 88, 12, 0.4); }
 
-        .label { font-size: 13px; font-weight: 700; color: var(--head); margin-bottom: 5px; }
-        .input-wrap { margin-bottom: 12px; }
-        input { width: 100%; padding: 11px; font-size: 16px; border: 2px solid var(--in-br); border-radius: 8px; background: var(--in-bg); color: var(--txt); font-weight: 600; outline: none; }
+        .label { font-size: 13px; font-weight: 700; color: var(--head); margin-bottom: 6px; }
+        .input-wrap { margin-bottom: 15px; }
+        
+        input { width: 100%; padding: 12px; font-size: 16px; border: 2px solid var(--in-br); border-radius: 8px; background: var(--in-bg); color: var(--txt); font-weight: 600; outline: none; transition: 0.2s; }
         input:focus { border-color: var(--p); }
 
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        /* --- CUSTOM DATE INPUT DESIGN --- */
+        .date-wrapper { position: relative; width: 100%; }
+        .date-display { width: 100%; padding: 12px; font-size: 16px; border: 2px solid var(--in-br); border-radius: 8px; background: var(--in-bg); color: var(--txt); font-weight: 600; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+        .date-input-hidden { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .date-wrapper:focus-within .date-display { border-color: var(--p); }
+
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
         .grid-3 input { text-align: center; }
 
-        .btn-main { width: 100%; background: #16a34a; color: white; border: none; padding: 15px; font-size: 17px; font-weight: 800; border-radius: 10px; cursor: pointer; margin-top: 5px; box-shadow: 0 4px 0 #15803d; }
-        .btn-main:active { transform: translateY(2px); box-shadow: 0 2px 0 #15803d; }
+        .btn-main { width: 100%; background: #16a34a; color: white; border: none; padding: 15px; font-size: 17px; font-weight: 800; border-radius: 10px; cursor: pointer; margin-top: 5px; box-shadow: 0 4px 0 #15803d; transition: 0.1s; }
+        .btn-main:active { transform: translateY(4px); box-shadow: 0 0px 0 #15803d; }
 
-        /* Larger Reset Button */
-        .btn-reset { width: 100%; background: #dc2626; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 700; border-radius: 10px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 0 #991b1b; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-reset:active { transform: translateY(2px); box-shadow: 0 2px 0 #991b1b; }
+        .btn-reset { width: 100%; background: #dc2626; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 700; border-radius: 10px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 0 #991b1b; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
+        .btn-reset:active { transform: translateY(4px); box-shadow: 0 0px 0 #991b1b; }
 
-        .result { margin-top: 15px; background: var(--res-bg); border: 2px solid var(--res-br); border-radius: 10px; padding: 12px; text-align: center; display: none; }
-        .res-date { font-size: 21px; font-weight: 800; margin: 5px 0; color: var(--p); }
-        .res-stats { display: flex; justify-content: space-around; border-top: 1px solid var(--res-br); padding-top: 8px; margin-top: 8px; font-size: 15px; font-weight: 700; }
+        .result { margin-top: 20px; background: var(--res-bg); border: 2px solid var(--res-br); border-radius: 12px; padding: 15px; text-align: center; display: none; }
+        .res-title { font-size: 14px; font-weight: 800; color: var(--txt); margin-bottom: 12px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .date-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .date-box { background: var(--box-bg); border: 1px solid var(--res-br); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+        .date-label { font-size: 12px; font-weight: 700; color: var(--res-br); text-transform: uppercase; }
+        .date-value { font-size: 16px; font-weight: 700; color: var(--txt); }
+        .date-value.highlight { color: var(--p); font-size: 19px; font-weight: 800; }
+
+        .res-stats { display: flex; justify-content: space-around; border-top: 1px dashed var(--res-br); padding-top: 12px; font-size: 15px; font-weight: 700; color: var(--txt); }
 
         .footer { background: var(--in-bg); padding: 15px; text-align: center; border-top: 1px solid var(--in-br); }
         .prof { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #16a34a; margin-bottom: 8px; object-fit: cover; }
@@ -62,9 +77,6 @@
         .footer .tel { font-size: 21px; color: #16a34a; font-weight: 900; margin-top: 5px; display: block; text-decoration: none; }
 
         #install-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1f2937; color: white; padding: 10px 15px; align-items: center; justify-content: space-between; font-size: 14px; z-index: 100; border-top: 1px solid #374151; }
-        
-        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.8); }
-        .light-mode input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0); }
     </style>
 </head>
 <body class="dark-mode">
@@ -75,7 +87,7 @@
                 <h1>ਪਰਚੀ ਹਿਸਾਬ</h1>
                 <p>ਸ੍ਰੀ ਦਰਬਾਰ ਸਾਹਿਬ, ਅੰਮ੍ਰਿਤਸਰ</p>
             </div>
-            <button onclick="toggleTheme()" id="themeBtn" style="background:rgba(255,255,255,0.2); border:none; border-radius:50%; width:38px; height:38px; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+            <button onclick="toggleTheme()" id="themeBtn" style="background:rgba(255,255,255,0.2); border:none; border-radius:50%; width:38px; height:38px; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: 0.2s;">
                 <svg id="moon-icon" width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                 <svg id="sun-icon" style="display:none;" width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path></svg>
             </button>
@@ -84,7 +96,15 @@
         <div class="content">
             <div class="input-wrap">
                 <div class="label">ਪਰਚੀ ਦੀ ਤਰੀਕ (ਅੱਜ)</div>
-                <input type="date" id="startDate">
+                <div class="date-wrapper">
+                    <div class="date-display">
+                        <span id="dateTextDisplay">DD-MM-YYYY</span>
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20" opacity="0.7">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <input type="date" id="startDate" class="date-input-hidden" onchange="updateDateDisplay()">
+                </div>
             </div>
 
             <div class="tab-box">
@@ -118,8 +138,19 @@
             <button class="btn-main" onclick="calculate()">ਹਿਸਾਬ ਲਗਾਓ</button>
 
             <div id="resBox" class="result">
-                <div style="font-size:12px; font-weight:700; opacity:0.8;">ਨਤੀਜਾ (ਪਰਚੀ 'ਤੇ ਇਹ ਤਰੀਕ ਪਾਓ):</div>
-                <div id="resDate" class="res-date"></div>
+                <div class="res-title">ਨਤੀਜਾ (ਪਰਚੀ 'ਤੇ ਇਹ ਤਰੀਕ ਪਾਓ)</div>
+                
+                <div class="date-container">
+                    <div class="date-box">
+                        <div class="date-label">ਤੋਂ (ਸ਼ੁਰੂਆਤੀ ਦਿਨ)</div>
+                        <div id="resFrom" class="date-value"></div>
+                    </div>
+                    <div class="date-box" style="border-color: var(--p);">
+                        <div class="date-label" style="color: var(--p);">ਤੱਕ (ਆਖਰੀ ਦਿਨ)</div>
+                        <div id="resTo" class="date-value highlight"></div>
+                    </div>
+                </div>
+
                 <div id="resStats" class="res-stats"></div>
             </div>
 
@@ -134,7 +165,7 @@
             <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
             <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
             <a href="tel:9464491806" class="tel">94644-91806</a>
-            <div style="font-size:9px; margin-top:10px; opacity:0.4;">Version 13.0</div>
+            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 16.0</div>
         </div>
     </div>
 
@@ -146,17 +177,26 @@
     <script>
         let currentTab = 'days';
 
-        // ਅੱਜ ਦੀ ਸਹੀ ਤਰੀਕ ਸੈੱਟ ਕਰਨ ਲਈ ਫੰਕਸ਼ਨ
+        // ਤਰੀਕ ਨੂੰ DD-MM-YYYY ਵਿੱਚ ਬਦਲ ਕੇ ਦਿਖਾਉਣ ਦਾ ਫੰਕਸ਼ਨ
+        function updateDateDisplay() {
+            const dateVal = document.getElementById('startDate').value;
+            if(dateVal) {
+                const [y, m, d] = dateVal.split('-');
+                document.getElementById('dateTextDisplay').innerText = `${d}-${m}-${y}`;
+            }
+        }
+
         function setToday() {
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
             document.getElementById('startDate').value = `${yyyy}-${mm}-${dd}`;
+            updateDateDisplay(); // ਤਰੀਕ ਭਰਨ ਤੋਂ ਬਾਅਦ ਡਿਸਪਲੇਅ ਵੀ ਅਪਡੇਟ ਕਰੋ
         }
 
         window.onload = () => {
-            setToday(); // ਰੀਫ੍ਰੈਸ਼ ਕਰਨ 'ਤੇ ਸਹੀ ਤਰੀਕ ਸੈੱਟ ਹੋਵੇਗੀ
+            setToday(); 
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'light') {
                 document.body.classList.remove('dark-mode');
@@ -187,12 +227,25 @@
             document.getElementById('resBox').style.display = 'none';
         }
 
+        function getFormattedDate(dateObj) {
+            const weekday = dateObj.toLocaleDateString('pa-IN', { weekday: 'long' });
+            const day = dateObj.getDate();
+            const monthText = dateObj.toLocaleDateString('pa-IN', { month: 'long' });
+            const monthNum = dateObj.getMonth() + 1; 
+            const year = dateObj.getFullYear();
+            
+            return `${weekday}, ${day} ${monthText} (${monthNum}), ${year}`;
+        }
+
         function calculate() {
             const startVal = document.getElementById('startDate').value;
             if (!startVal) return alert("ਤਰੀਕ ਚੁਣੋ");
             const start = new Date(startVal);
             let finalDate = new Date(start);
             let statsHtml = "";
+
+            let fromDate = new Date(start);
+            fromDate.setDate(fromDate.getDate() + 1);
 
             if (currentTab === 'days') {
                 const total = parseFloat(document.getElementById('t_budget').value) || 0;
@@ -214,14 +267,16 @@
                 if (amt > 0 && diff > 0) statsHtml += `<div>ਰੋਜ਼ਾਨਾ: ₹${(amt / diff).toFixed(2)}</div>`;
             }
 
-            document.getElementById('resDate').innerText = finalDate.toLocaleDateString('pa-IN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+            document.getElementById('resFrom').innerText = getFormattedDate(fromDate);
+            document.getElementById('resTo').innerText = getFormattedDate(finalDate);
+            
             document.getElementById('resStats').innerHTML = statsHtml;
             document.getElementById('resBox').style.display = 'block';
             document.getElementById('resBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         function resetApp() {
-            setToday(); // ਰੀਸੈੱਟ ਕਰਨ 'ਤੇ ਵੀ ਸਹੀ ਤਰੀਕ ਸੈੱਟ ਹੋਵੇਗੀ
+            setToday(); 
             document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
             document.getElementById('resBox').style.display = 'none';
         }
@@ -245,4 +300,3 @@
     </script>
 </body>
 </html>
-
