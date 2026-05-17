@@ -1,4 +1,4 @@
-const CACHE_NAME = 'parchi-cache-v23';
+const CACHE_NAME = 'parchi-cache-v24';
 const assets = [
   './',
   './index.html',
