@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ea580c">
     <link rel="manifest" href="manifest.json">
-    <title>ਪਰਚੀ ਹਿਸਾਬ v16</title>
+    <title>ਪਰਚੀ ਹਿਸਾਬ v20</title>
     <style>
         /* DEFAULT DARK MODE (SUPER AMOLED) */
         :root {
@@ -14,6 +14,7 @@
             --in-bg: #1a1a1a; --in-br: #333333;
             --res-bg: #064e3b; --res-br: #059669;
             --box-bg: rgba(0, 0, 0, 0.2);
+            --tbl-th: #262626; --tbl-td: #1a1a1a; --tbl-br: #333333;
         }
         .light-mode {
             --bg: #fff7ed; --card: #ffffff;
@@ -21,6 +22,7 @@
             --in-bg: #f9fafb; --in-br: #e5e7eb;
             --res-bg: #ecfdf5; --res-br: #34d399;
             --box-bg: rgba(255, 255, 255, 0.6);
+            --tbl-th: #fed7aa; --tbl-td: #fff7ed; --tbl-br: #fdba74;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: system-ui, -apple-system, sans-serif; }
@@ -35,7 +37,7 @@
         .content { padding: 15px; }
         
         .tab-box { display: flex; background: var(--in-bg); border-radius: 8px; padding: 4px; margin-bottom: 15px; border: 1px solid var(--in-br); }
-        .tab-btn { flex: 1; border: none; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; background: transparent; color: var(--txt); transition: 0.2s; }
+        .tab-btn { flex: 1; border: none; padding: 10px 4px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; background: transparent; color: var(--txt); transition: 0.2s; text-align: center; }
         .tab-btn.active { background: var(--p); color: white; box-shadow: 0 2px 5px rgba(234, 88, 12, 0.4); }
 
         .label { font-size: 13px; font-weight: 700; color: var(--head); margin-bottom: 6px; }
@@ -44,7 +46,6 @@
         input { width: 100%; padding: 12px; font-size: 16px; border: 2px solid var(--in-br); border-radius: 8px; background: var(--in-bg); color: var(--txt); font-weight: 600; outline: none; transition: 0.2s; }
         input:focus { border-color: var(--p); }
 
-        /* --- CUSTOM DATE INPUT DESIGN --- */
         .date-wrapper { position: relative; width: 100%; }
         .date-display { width: 100%; padding: 12px; font-size: 16px; border: 2px solid var(--in-br); border-radius: 8px; background: var(--in-bg); color: var(--txt); font-weight: 600; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
         .date-input-hidden { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
@@ -55,6 +56,9 @@
 
         .btn-main { width: 100%; background: #16a34a; color: white; border: none; padding: 15px; font-size: 17px; font-weight: 800; border-radius: 10px; cursor: pointer; margin-top: 5px; box-shadow: 0 4px 0 #15803d; transition: 0.1s; }
         .btn-main:active { transform: translateY(4px); box-shadow: 0 0px 0 #15803d; }
+
+        .btn-blue { background: #2563eb; box-shadow: 0 4px 0 #1e40af; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-blue:active { box-shadow: 0 0px 0 #1e40af; }
 
         .btn-reset { width: 100%; background: #dc2626; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 700; border-radius: 10px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 0 #991b1b; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
         .btn-reset:active { transform: translateY(4px); box-shadow: 0 0px 0 #991b1b; }
@@ -67,16 +71,20 @@
         .date-label { font-size: 12px; font-weight: 700; color: var(--res-br); text-transform: uppercase; }
         .date-value { font-size: 16px; font-weight: 700; color: var(--txt); }
         .date-value.highlight { color: var(--p); font-size: 19px; font-weight: 800; }
-
         .res-stats { display: flex; justify-content: space-around; border-top: 1px dashed var(--res-br); padding-top: 12px; font-size: 15px; font-weight: 700; color: var(--txt); }
+
+        .table-container { margin-top: 10px; border: 1px solid var(--tbl-br); border-radius: 8px; overflow: hidden; background: var(--in-bg); }
+        .list-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; }
+        .list-table th { background: var(--tbl-th); padding: 10px 5px; color: var(--txt); font-weight: 800; border-bottom: 2px solid var(--tbl-br); }
+        .list-table td { padding: 8px 5px; border-bottom: 1px solid var(--tbl-br); color: var(--txt); font-weight: 600; }
+        .list-table tr:last-child td { border-bottom: none; }
+        .today-lbl { font-size: 14px; font-weight: bold; color: var(--head); text-align: center; margin-bottom: 8px; }
 
         .footer { background: var(--in-bg); padding: 15px; text-align: center; border-top: 1px solid var(--in-br); }
         .prof { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #16a34a; margin-bottom: 8px; object-fit: cover; }
         .footer h2 { margin: 0; font-size: 19px; color: var(--txt); }
         .footer p { margin: 2px 0; font-size: 13px; opacity: 0.8; }
         .footer .tel { font-size: 21px; color: #16a34a; font-weight: 900; margin-top: 5px; display: block; text-decoration: none; }
-
-        #install-bar { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #1f2937; color: white; padding: 10px 15px; align-items: center; justify-content: space-between; font-size: 14px; z-index: 100; border-top: 1px solid #374151; }
     </style>
 </head>
 <body class="dark-mode">
@@ -108,8 +116,9 @@
             </div>
 
             <div class="tab-box">
-                <button class="tab-btn active" id="btn-days" onclick="switchTab('days')">ਦਿਨ ਪਤਾ ਕਰੋ</button>
-                <button class="tab-btn" id="btn-date" onclick="switchTab('date')">ਤਰੀਕ ਪਤਾ ਕਰੋ</button>
+                <button class="tab-btn active" id="btn-days" onclick="switchTab('days')">ਦਿਨ<br>ਪਤਾ ਕਰੋ</button>
+                <button class="tab-btn" id="btn-date" onclick="switchTab('date')">ਤਰੀਕ<br>ਪਤਾ ਕਰੋ</button>
+                <button class="tab-btn" id="btn-list" onclick="switchTab('list')">ਦਿਨਾਂ ਦੀ<br>ਲਿਸਟ</button>
             </div>
 
             <div id="view-days">
@@ -121,6 +130,7 @@
                     <div class="label">ਰੋਜ਼ਾਨਾ ਕਟੌਤੀ (Daily ₹)</div>
                     <input type="number" id="d_rate" placeholder="0" inputmode="numeric">
                 </div>
+                <button class="btn-main" onclick="calculate()">ਹਿਸਾਬ ਲਗਾਓ</button>
             </div>
 
             <div id="view-date" style="display:none;">
@@ -133,13 +143,31 @@
                     <div class="label">ਕੁੱਲ ਰਕਮ (ਜੇਕਰ ਪਤਾ ਕਰਨੀ ਹੈ ₹)</div>
                     <input type="number" id="t_amt" placeholder="0" inputmode="numeric">
                 </div>
+                <button class="btn-main" onclick="calculate()">ਹਿਸਾਬ ਲਗਾਓ</button>
             </div>
 
-            <button class="btn-main" onclick="calculate()">ਹਿਸਾਬ ਲਗਾਓ</button>
+            <div id="view-list" style="display:none;">
+                <div class="today-lbl" id="lblListToday"></div>
+                <div class="table-container">
+                    <table class="list-table">
+                        <thead>
+                            <tr>
+                                <th>ਤੋਂ (ਸ਼ੁਰੂ)</th>
+                                <th style="color:var(--p);">ਦਿਨਾਂ ਬਾਅਦ</th>
+                                <th>ਤੱਕ (ਆਖਰੀ)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listBody"></tbody>
+                    </table>
+                </div>
+                <button class="btn-main btn-blue" onclick="downloadJPG()" style="margin-top:15px;">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    ਲਿਸਟ ਡਾਊਨਲੋਡ ਕਰੋ (A4 JPG)
+                </button>
+            </div>
 
             <div id="resBox" class="result">
                 <div class="res-title">ਨਤੀਜਾ (ਪਰਚੀ 'ਤੇ ਇਹ ਤਰੀਕ ਪਾਓ)</div>
-                
                 <div class="date-container">
                     <div class="date-box">
                         <div class="date-label">ਤੋਂ (ਸ਼ੁਰੂਆਤੀ ਦਿਨ)</div>
@@ -150,11 +178,10 @@
                         <div id="resTo" class="date-value highlight"></div>
                     </div>
                 </div>
-
                 <div id="resStats" class="res-stats"></div>
             </div>
 
-            <button class="btn-reset" onclick="resetApp()">
+            <button class="btn-reset" onclick="resetApp()" id="resetBtn">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                 ਰੀਸੈੱਟ ਕਰੋ
             </button>
@@ -165,24 +192,20 @@
             <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
             <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
             <a href="tel:9464491806" class="tel">94644-91806</a>
-            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 16.0</div>
+            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 20.0</div>
         </div>
     </div>
 
-    <div id="install-bar">
-        <span>ਐਪ ਫੋਨ ਵਿੱਚ ਸੇਵ ਕਰੋ</span>
-        <button onclick="installApp()" style="background:var(--p); color:white; border:none; padding:6px 15px; border-radius:20px; font-weight:bold;">ਇੰਸਟਾਲ</button>
-    </div>
-
     <script>
+        const intervalDaysArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 150, 180, 210, 270, 365];
         let currentTab = 'days';
 
-        // ਤਰੀਕ ਨੂੰ DD-MM-YYYY ਵਿੱਚ ਬਦਲ ਕੇ ਦਿਖਾਉਣ ਦਾ ਫੰਕਸ਼ਨ
         function updateDateDisplay() {
             const dateVal = document.getElementById('startDate').value;
             if(dateVal) {
                 const [y, m, d] = dateVal.split('-');
                 document.getElementById('dateTextDisplay').innerText = `${d}-${m}-${y}`;
+                if(currentTab === 'list') buildListUI(); 
             }
         }
 
@@ -192,7 +215,7 @@
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
             document.getElementById('startDate').value = `${yyyy}-${mm}-${dd}`;
-            updateDateDisplay(); // ਤਰੀਕ ਭਰਨ ਤੋਂ ਬਾਅਦ ਡਿਸਪਲੇਅ ਵੀ ਅਪਡੇਟ ਕਰੋ
+            updateDateDisplay();
         }
 
         window.onload = () => {
@@ -222,25 +245,62 @@
             currentTab = t;
             document.getElementById('view-days').style.display = t === 'days' ? 'block' : 'none';
             document.getElementById('view-date').style.display = t === 'date' ? 'block' : 'none';
+            document.getElementById('view-list').style.display = t === 'list' ? 'block' : 'none';
+            
             document.getElementById('btn-days').classList.toggle('active', t === 'days');
             document.getElementById('btn-date').classList.toggle('active', t === 'date');
+            document.getElementById('btn-list').classList.toggle('active', t === 'list');
+            
             document.getElementById('resBox').style.display = 'none';
+            
+            if(t === 'list') buildListUI();
         }
 
+        // ਐਪ ਦੇ ਅੰਦਰ ਦਿਖਾਉਣ ਲਈ ਪੰਜਾਬੀ ਤਰੀਕ ਫਾਰਮੈਟ
         function getFormattedDate(dateObj) {
             const weekday = dateObj.toLocaleDateString('pa-IN', { weekday: 'long' });
             const day = dateObj.getDate();
             const monthText = dateObj.toLocaleDateString('pa-IN', { month: 'long' });
             const monthNum = dateObj.getMonth() + 1; 
             const year = dateObj.getFullYear();
-            
             return `${weekday}, ${day} ${monthText} (${monthNum}), ${year}`;
+        }
+        
+        // ਛੋਟਾ DD-MM-YYYY ਫਾਰਮੈਟ (JPG ਅਤੇ ਲਿਸਟ ਲਈ)
+        function getShortDate(dateObj) {
+            return `${String(dateObj.getDate()).padStart(2,'0')}-${String(dateObj.getMonth()+1).padStart(2,'0')}-${dateObj.getFullYear()}`;
+        }
+
+        function buildListUI() {
+            const startVal = document.getElementById('startDate').value; // 'YYYY-MM-DD'
+            const [year, month, day] = startVal.split('-');
+            const baseDate = new Date(year, month - 1, day);
+            
+            // ਐਪ ਦੀ ਸਕਰੀਨ ਤੇ ਪੰਜਾਬੀ ਵਾਲੀ ਤਰੀਕ ਹੀ ਸ਼ੋਅ ਹੋਵੇਗੀ
+            document.getElementById('lblListToday').innerText = `ਅੱਜ: ${getFormattedDate(baseDate)}`;
+
+            const fromDate = new Date(baseDate);
+            fromDate.setDate(fromDate.getDate() + 1);
+            const fromStr = getShortDate(fromDate);
+
+            let tbody = "";
+            intervalDaysArray.forEach(days => {
+                let toDate = new Date(baseDate);
+                toDate.setDate(toDate.getDate() + days);
+                tbody += `<tr>
+                    <td>${fromStr}</td>
+                    <td style="color:var(--p); font-weight:800;">${days}</td>
+                    <td>${getShortDate(toDate)}</td>
+                </tr>`;
+            });
+            document.getElementById('listBody').innerHTML = tbody;
         }
 
         function calculate() {
             const startVal = document.getElementById('startDate').value;
             if (!startVal) return alert("ਤਰੀਕ ਚੁਣੋ");
-            const start = new Date(startVal);
+            const [year, month, day] = startVal.split('-');
+            const start = new Date(year, month - 1, day);
             let finalDate = new Date(start);
             let statsHtml = "";
 
@@ -254,7 +314,7 @@
                 const days = Math.floor(total / daily);
                 finalDate.setDate(finalDate.getDate() + days);
                 statsHtml = `<div>ਦਿਨ: ${days}</div><div>ਬਾਕੀ: ₹${(total % daily).toFixed(2)}</div>`;
-            } else {
+            } else if (currentTab === 'date') {
                 const y = parseInt(document.getElementById('yy').value) || 0;
                 const m = parseInt(document.getElementById('mm').value) || 0;
                 const d = parseInt(document.getElementById('dd').value) || 0;
@@ -269,7 +329,6 @@
 
             document.getElementById('resFrom').innerText = getFormattedDate(fromDate);
             document.getElementById('resTo').innerText = getFormattedDate(finalDate);
-            
             document.getElementById('resStats').innerHTML = statsHtml;
             document.getElementById('resBox').style.display = 'block';
             document.getElementById('resBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -281,19 +340,113 @@
             document.getElementById('resBox').style.display = 'none';
         }
 
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('install-bar').style.display = 'flex';
-        });
-
-        async function installApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt = null;
-                document.getElementById('install-bar').style.display = 'none';
+        function downloadJPG() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // A4 Size pixels at 300 DPI
+            const width = 2480;
+            const height = 3508;
+            canvas.width = width;
+            canvas.height = height;
+            
+            // 1. ਸਫੈਦ ਬੈਕਗਰਾਊਂਡ
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+            
+            // 2. ਵਾਟਰਮਾਰਕ (ਪੂਰੇ ਪੇਪਰ ਤੇ ਤਿਰਛਾ)
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
+            ctx.font = 'bold 70px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            const watermarkText = 'Dsgn-Inderjeet Talwandi Sabo 9464491806';
+            ctx.save();
+            ctx.translate(width / 2, height / 2);
+            ctx.rotate(-Math.PI / 4); 
+            for(let i = -4000; i < 4000; i += 400) {
+                for(let j = -4000; j < 4000; j += 1500) {
+                    ctx.fillText(watermarkText, j, i);
+                }
             }
+            ctx.restore();
+
+            // 3. ਸੰਖੇਪ ਪਰਚੀ ਲਿਸਟ (ਸੱਜੇ ਪਾਸੇ)
+            const startVal = document.getElementById('startDate').value; // 'YYYY-MM-DD'
+            const [year, month, day] = startVal.split('-');
+            const baseDate = new Date(year, month - 1, day);
+            
+            const fromDate = new Date(baseDate);
+            fromDate.setDate(fromDate.getDate() + 1);
+            const fromStr = getShortDate(fromDate);
+            
+            const perchiWidth = 800;
+            const perchiX = width - perchiWidth - 100; 
+            const perchiY = 100; 
+            const perchiPadding = 40; 
+            
+            ctx.fillStyle = '#000000';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'top';
+            
+            // ਮੁੱਖ ਟਾਈਟਲ
+            ctx.font = 'bold 50px sans-serif';
+            ctx.fillText("ਪਰਚੀ ਹਿਸਾਬ - ਦਿਨਾਂ ਦੀ ਲਿਸਟ", perchiX + perchiPadding, perchiY + perchiPadding);
+            
+            // ਨਵਾਂ ਕ੍ਰੈਡਿਟ (ਟਾਈਟਲ ਦੇ ਬਿਲਕੁਲ ਹੇਠਾਂ)
+            ctx.fillStyle = '#ea580c'; // ਸੰਤਰੀ ਰੰਗ
+            ctx.font = 'bold 30px sans-serif';
+            ctx.fillText("Dsgn-Inderjeet Talwandi Sabo 9464491806", perchiX + perchiPadding, perchiY + perchiPadding + 65);
+
+            // ਅੱਜ ਦੀ ਤਰੀਕ (ਕ੍ਰੈਡਿਟ ਦੇ ਹੇਠਾਂ)
+            ctx.font = '35px sans-serif';
+            ctx.fillStyle = '#333333';
+            ctx.fillText(`ਅੱਜ ਦੀ ਤਰੀਕ: ${getShortDate(baseDate)}`, perchiX + perchiPadding, perchiY + perchiPadding + 115);
+
+            // ਲਿਸਟ ਡਾਟਾ ਪ੍ਰਿੰਟ ਕਰਨਾ
+            let yPos = perchiY + perchiPadding + 190;
+            
+            intervalDaysArray.forEach(days => {
+                let toDate = new Date(baseDate);
+                toDate.setDate(toDate.getDate() + days);
+                const toStr = getShortDate(toDate); 
+                
+                ctx.fillStyle = '#000000';
+                ctx.font = '40px sans-serif';
+                ctx.fillText(fromStr, perchiX + perchiPadding, yPos);
+                
+                // ਦਿਨ ਹਾਈਲਾਈਟ (ਵਿਚਕਾਰ)
+                ctx.fillStyle = '#ea580c';
+                ctx.font = 'bold 40px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(`${days} ਦਿਨਾਂ ਬਾਅਦ`, perchiX + perchiWidth/2, yPos);
+                ctx.textAlign = 'left'; 
+                
+                ctx.fillStyle = '#000000';
+                ctx.font = '40px sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText(toStr, perchiX + perchiWidth - perchiPadding, yPos);
+                ctx.textAlign = 'left'; 
+                
+                // ਹਲਕੀ ਲਾਈਨ
+                ctx.beginPath();
+                ctx.moveTo(perchiX + perchiPadding, yPos + 60);
+                ctx.lineTo(perchiX + perchiWidth - perchiPadding, yPos + 60);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = '#e5e7eb';
+                ctx.stroke();
+                
+                yPos += 80; 
+            });
+
+            // ਫਾਈਲ ਡਾਊਨਲੋਡ ਕਰਨ ਦੀ ਕਮਾਂਡ
+            const dataUrl = canvas.toDataURL('image/jpeg', 1.0);
+            const link = document.createElement('a');
+            link.download = `Parchi_List_${fromStr}.jpg`;
+            link.href = dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
