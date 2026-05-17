@@ -15,7 +15,7 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <title>ਪਰਚੀ ਹਿਸਾਬ v23</title>
+    <title>ਪਰਚੀ ਹਿਸਾਬ v24</title>
     <style>
         /* DEFAULT DARK MODE (SUPER AMOLED) */
         :root {
@@ -67,7 +67,6 @@
         .btn-blue { background: #2563eb; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 800; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 0 #1e40af; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
         .btn-blue:active { transform: translateY(4px); box-shadow: 0 0px 0 #1e40af; }
 
-        /* PDF Button Style */
         .btn-pdf { background: #eab308; color: #000; border: none; padding: 12px; font-size: 15px; font-weight: 800; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 0 #ca8a04; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
         .btn-pdf:active { transform: translateY(4px); box-shadow: 0 0px 0 #ca8a04; }
 
@@ -208,7 +207,7 @@
             <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
             <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
             <a href="tel:9464491806" class="tel">94644-91806</a>
-            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 23.0</div>
+            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 24.0</div>
         </div>
     </div>
 
@@ -372,7 +371,7 @@
             document.getElementById('t_budget').focus();
         }
 
-        // ਡਿਜ਼ਾਈਨ ਬਣਾਉਣ ਵਾਲਾ ਮੇਨ ਫੰਕਸ਼ਨ ਜੋ JPG ਅਤੇ PDF ਦੋਵਾਂ ਲਈ ਕੰਮ ਕਰੇਗਾ
+        // ਡਿਜ਼ਾਈਨ ਜਨਰੇਟ ਕਰਨ ਵਾਲਾ ਫੰਕਸ਼ਨ (ਬੈਕਗਰਾਊਂਡ ਵਾਟਰਮਾਰਕ ਪੂਰੀ ਤਰ੍ਹਾਂ ਹਟਾ ਦਿੱਤਾ ਗਿਆ ਹੈ)
         function generateCanvas() {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -383,25 +382,13 @@
             canvas.width = width;
             canvas.height = height;
             
+            // 1. ਸਫੈਦ ਬੈਕਗਰਾਊਂਡ
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, width, height);
             
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
-            ctx.font = 'bold 70px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            
-            const watermarkText = 'Dsgn-Inderjeet Talwandi Sabo 9464491806';
-            ctx.save();
-            ctx.translate(width / 2, height / 2);
-            ctx.rotate(-Math.PI / 4); 
-            for(let i = -4000; i < 4000; i += 400) {
-                for(let j = -4000; j < 4000; j += 1500) {
-                    ctx.fillText(watermarkText, j, i);
-                }
-            }
-            ctx.restore();
+            // (ਬੈਕਗਰਾਊਂਡ ਵਾਟਰਮਾਰਕ ਵਾਲਾ ਕੋਡ ਇੱਥੋਂ ਡਿਲੀਟ ਕਰ ਦਿੱਤਾ ਹੈ)
 
+            // 2. ਸੰਖੇਪ ਪਰਚੀ ਲਿਸਟ (ਸੱਜੇ ਪਾਸੇ)
             const startVal = document.getElementById('startDate').value; 
             const [year, month, day] = startVal.split('-');
             const baseDate = new Date(year, month - 1, day);
@@ -477,7 +464,7 @@
             document.body.removeChild(link);
         }
 
-        // PDF ਨੂੰ ਨਵੀਂ ਟੈਬ ਵਿੱਚ ਖੋਲ੍ਹਣ ਵਾਲਾ ਫੰਕਸ਼ਨ
+        // PDF ਨੂੰ ਸਟ੍ਰਿਕਟ A4 ਮਿਲੀਮੀਟਰ ਲੇਆਉਟ (210mm x 297mm) ਵਿੱਚ ਖੋਲ੍ਹਣਾ
         function openPDF() {
             if (!window.jspdf || !window.jspdf.jsPDF) {
                 alert("PDF ਸਿਸਟਮ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇੰਟਰਨੈੱਟ ਆਨ ਰੱਖੋ ਅਤੇ ਕੁਝ ਸੈਕਿੰਡ ਬਾਅਦ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
@@ -488,15 +475,14 @@
             
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF({
-                orientation: 'p',
-                unit: 'px',
-                format: [result.canvas.width, result.canvas.height]
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4' // ਸਟੈਂਡਰਡ A4 ਪੇਪਰ ਸਾਈਜ਼ ਸੈੱਟ
             });
             
-            // ਡਿਜ਼ਾਈਨ ਨੂੰ PDF ਵਿੱਚ ਜੋੜੋ
-            pdf.addImage(imgData, 'JPEG', 0, 0, result.canvas.width, result.canvas.height);
+            // ਉੱਚ ਰੈਜ਼ੋਲੂਸ਼ਨ ਇਮੇਜ ਨੂੰ ਬਿਲਕੁਲ A4 ਸਾਈਜ਼ (210mm ਚੌੜਾਈ x 297mm ਲੰਬਾਈ) ਵਿੱਚ ਸਕੇਲ ਕਰਨਾ
+            pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
             
-            // PDF ਦਾ URL ਬਣਾ ਕੇ ਨਵੀਂ ਟੈਬ ਵਿੱਚ ਖੋਲ੍ਹੋ (ਡਾਊਨਲੋਡ ਨਹੀਂ ਹੋਵੇਗਾ)
             const pdfBlob = pdf.output('blob');
             const blobUrl = URL.createObjectURL(pdfBlob);
             window.open(blobUrl, '_blank');
