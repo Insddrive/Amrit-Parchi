@@ -13,7 +13,9 @@
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
     
-    <title>ਪਰਚੀ ਹਿਸਾਬ v22</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <title>ਪਰਚੀ ਹਿਸਾਬ v23</title>
     <style>
         /* DEFAULT DARK MODE (SUPER AMOLED) */
         :root {
@@ -62,8 +64,12 @@
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
         .grid-3 input { text-align: center; }
 
-        .btn-blue { background: #2563eb; width: 100%; color: white; border: none; padding: 15px; font-size: 17px; font-weight: 800; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 0 #1e40af; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; margin-top: 5px; }
+        .btn-blue { background: #2563eb; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 800; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 0 #1e40af; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
         .btn-blue:active { transform: translateY(4px); box-shadow: 0 0px 0 #1e40af; }
+
+        /* PDF Button Style */
+        .btn-pdf { background: #eab308; color: #000; border: none; padding: 12px; font-size: 15px; font-weight: 800; border-radius: 10px; cursor: pointer; box-shadow: 0 4px 0 #ca8a04; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
+        .btn-pdf:active { transform: translateY(4px); box-shadow: 0 0px 0 #ca8a04; }
 
         .btn-reset { width: 100%; background: #dc2626; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 700; border-radius: 10px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 0 #991b1b; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
         .btn-reset:active { transform: translateY(4px); box-shadow: 0 0px 0 #991b1b; }
@@ -163,10 +169,17 @@
                         <tbody id="listBody"></tbody>
                     </table>
                 </div>
-                <button class="btn-blue" onclick="downloadJPG()" style="margin-top:15px;">
-                    <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                    ਲਿਸਟ ਡਾਊਨਲੋਡ ਕਰੋ (A4 JPG)
-                </button>
+                
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="btn-blue" onclick="downloadJPG()" style="flex: 1;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        JPG ਡਾਊਨਲੋਡ
+                    </button>
+                    <button class="btn-pdf" onclick="openPDF()" style="flex: 1;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        PDF ਖੋਲ੍ਹੋ
+                    </button>
+                </div>
             </div>
 
             <div id="resBox" class="result">
@@ -195,12 +208,11 @@
             <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
             <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
             <a href="tel:9464491806" class="tel">94644-91806</a>
-            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 22.0</div>
+            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 23.0</div>
         </div>
     </div>
 
     <script>
-        // 200 ਅਤੇ 250 ਦਿਨ ਸ਼ਾਮਲ ਕੀਤੇ ਗਏ
         const intervalDaysArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 150, 180, 200, 210, 250, 270, 365];
         let currentTab = 'days';
 
@@ -210,7 +222,7 @@
                 const [y, m, d] = dateVal.split('-');
                 document.getElementById('dateTextDisplay').innerText = `${d}-${m}-${y}`;
                 if(currentTab === 'list') buildListUI(); 
-                else calculate(); // ਤਰੀਕ ਬਦਲਣ ਤੇ ਵੀ ਲਾਈਵ ਹਿਸਾਬ ਅਪਡੇਟ ਹੋਵੇਗਾ
+                else calculate(); 
             }
         }
 
@@ -261,7 +273,7 @@
             if(t === 'list') {
                 buildListUI();
             } else {
-                calculate(); // ਟੈਬ ਬਦਲਣ 'ਤੇ ਪੁਰਾਣਾ ਲਿਖਿਆ ਡਾਟਾ ਆਪਣੇ ਆਪ ਹਿਸਾਬ ਲਗਾ ਲਵੇਗਾ
+                calculate(); 
             }
         }
 
@@ -319,7 +331,6 @@
                 const total = parseFloat(document.getElementById('t_budget').value) || 0;
                 const daily = parseFloat(document.getElementById('d_rate').value) || 0;
                 
-                // ਜੇਕਰ ਦੋਵੇਂ ਖਾਨੇ ਨਹੀਂ ਭਰੇ, ਤਾਂ ਚੁੱਪ-ਚਾਪ ਰਿਜ਼ਲਟ ਲੁਕਾ ਦਿਓ (ਕੋਈ ਪਰੇਸ਼ਾਨ ਕਰਨ ਵਾਲਾ alert ਨਹੀਂ)
                 if (total <= 0 || daily <= 0) {
                     document.getElementById('resBox').style.display = 'none';
                     return;
@@ -334,7 +345,6 @@
                 const m = parseInt(document.getElementById('mm').value) || 0;
                 const d = parseInt(document.getElementById('dd').value) || 0;
                 
-                // ਜੇਕਰ ਤਰੀਕ ਵਾਲੇ ਖਾਨੇ ਖਾਲੀ ਹਨ, ਤਾਂ ਰਿਜ਼ਲਟ ਲੁਕਾ ਦਿਓ
                 if (y === 0 && m === 0 && d === 0) {
                     document.getElementById('resBox').style.display = 'none';
                     return;
@@ -353,18 +363,17 @@
             document.getElementById('resTo').innerText = getFormattedDate(finalDate);
             document.getElementById('resStats').innerHTML = statsHtml;
             document.getElementById('resBox').style.display = 'block';
-            
-            // ਨੋਟ: scrollIntoView ਹਟਾ ਦਿੱਤਾ ਹੈ ਤਾਂ ਜੋ ਲਾਈਵ ਟਾਈਪ ਕਰਨ ਵੇਲੇ ਸਕਰੀਨ ਥੱਲੇ ਨਾ ਭੱਜੇ।
         }
 
         function resetApp() {
             setToday(); 
             document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
             document.getElementById('resBox').style.display = 'none';
-            document.getElementById('t_budget').focus(); // ਰੀਸੈੱਟ ਤੋਂ ਬਾਅਦ ਕਰਸਰ ਪਹਿਲੇ ਡੱਬੇ 'ਚ ਆ ਜਾਵੇਗਾ
+            document.getElementById('t_budget').focus();
         }
 
-        function downloadJPG() {
+        // ਡਿਜ਼ਾਈਨ ਬਣਾਉਣ ਵਾਲਾ ਮੇਨ ਫੰਕਸ਼ਨ ਜੋ JPG ਅਤੇ PDF ਦੋਵਾਂ ਲਈ ਕੰਮ ਕਰੇਗਾ
+        function generateCanvas() {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
@@ -374,11 +383,9 @@
             canvas.width = width;
             canvas.height = height;
             
-            // 1. ਸਫੈਦ ਬੈਕਗਰਾਊਂਡ
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, width, height);
             
-            // 2. ਵਾਟਰਮਾਰਕ 
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
             ctx.font = 'bold 70px sans-serif';
             ctx.textAlign = 'center';
@@ -395,7 +402,6 @@
             }
             ctx.restore();
 
-            // 3. ਸੰਖੇਪ ਪਰਚੀ ਲਿਸਟ
             const startVal = document.getElementById('startDate').value; 
             const [year, month, day] = startVal.split('-');
             const baseDate = new Date(year, month - 1, day);
@@ -457,13 +463,43 @@
                 yPos += 80; 
             });
 
-            const dataUrl = canvas.toDataURL('image/jpeg', 1.0);
+            return { canvas, fromStr };
+        }
+
+        function downloadJPG() {
+            const result = generateCanvas();
+            const dataUrl = result.canvas.toDataURL('image/jpeg', 1.0);
             const link = document.createElement('a');
-            link.download = `Parchi_List_${fromStr}.jpg`;
+            link.download = `Parchi_List_${result.fromStr}.jpg`;
             link.href = dataUrl;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+
+        // PDF ਨੂੰ ਨਵੀਂ ਟੈਬ ਵਿੱਚ ਖੋਲ੍ਹਣ ਵਾਲਾ ਫੰਕਸ਼ਨ
+        function openPDF() {
+            if (!window.jspdf || !window.jspdf.jsPDF) {
+                alert("PDF ਸਿਸਟਮ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇੰਟਰਨੈੱਟ ਆਨ ਰੱਖੋ ਅਤੇ ਕੁਝ ਸੈਕਿੰਡ ਬਾਅਦ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
+                return;
+            }
+            const result = generateCanvas();
+            const imgData = result.canvas.toDataURL('image/jpeg', 0.95);
+            
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({
+                orientation: 'p',
+                unit: 'px',
+                format: [result.canvas.width, result.canvas.height]
+            });
+            
+            // ਡਿਜ਼ਾਈਨ ਨੂੰ PDF ਵਿੱਚ ਜੋੜੋ
+            pdf.addImage(imgData, 'JPEG', 0, 0, result.canvas.width, result.canvas.height);
+            
+            // PDF ਦਾ URL ਬਣਾ ਕੇ ਨਵੀਂ ਟੈਬ ਵਿੱਚ ਖੋਲ੍ਹੋ (ਡਾਊਨਲੋਡ ਨਹੀਂ ਹੋਵੇਗਾ)
+            const pdfBlob = pdf.output('blob');
+            const blobUrl = URL.createObjectURL(pdfBlob);
+            window.open(blobUrl, '_blank');
         }
 
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
