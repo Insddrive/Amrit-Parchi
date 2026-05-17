@@ -1,4 +1,4 @@
-const CACHE_NAME = 'parchi-cache-v16';
+const CACHE_NAME = 'parchi-cache-v20';
 const assets = [
   'index.html',
   'manifest.json'
