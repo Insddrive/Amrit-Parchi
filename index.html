@@ -4,8 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#ea580c">
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <link rel="manifest" href="manifest.json">
-    <title>ਪਰਚੀ ਹਿਸਾਬ v20</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <title>ਪਰਚੀ ਹਿਸਾਬ v21</title>
     <style>
         /* DEFAULT DARK MODE (SUPER AMOLED) */
         :root {
@@ -192,7 +200,7 @@
             <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
             <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
             <a href="tel:9464491806" class="tel">94644-91806</a>
-            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 20.0</div>
+            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 21.0</div>
         </div>
     </div>
 
@@ -256,7 +264,6 @@
             if(t === 'list') buildListUI();
         }
 
-        // ਐਪ ਦੇ ਅੰਦਰ ਦਿਖਾਉਣ ਲਈ ਪੰਜਾਬੀ ਤਰੀਕ ਫਾਰਮੈਟ
         function getFormattedDate(dateObj) {
             const weekday = dateObj.toLocaleDateString('pa-IN', { weekday: 'long' });
             const day = dateObj.getDate();
@@ -266,7 +273,6 @@
             return `${weekday}, ${day} ${monthText} (${monthNum}), ${year}`;
         }
         
-        // ਛੋਟਾ DD-MM-YYYY ਫਾਰਮੈਟ (JPG ਅਤੇ ਲਿਸਟ ਲਈ)
         function getShortDate(dateObj) {
             return `${String(dateObj.getDate()).padStart(2,'0')}-${String(dateObj.getMonth()+1).padStart(2,'0')}-${dateObj.getFullYear()}`;
         }
@@ -276,7 +282,6 @@
             const [year, month, day] = startVal.split('-');
             const baseDate = new Date(year, month - 1, day);
             
-            // ਐਪ ਦੀ ਸਕਰੀਨ ਤੇ ਪੰਜਾਬੀ ਵਾਲੀ ਤਰੀਕ ਹੀ ਸ਼ੋਅ ਹੋਵੇਗੀ
             document.getElementById('lblListToday').innerText = `ਅੱਜ: ${getFormattedDate(baseDate)}`;
 
             const fromDate = new Date(baseDate);
@@ -449,6 +454,7 @@
             document.body.removeChild(link);
         }
 
+        // Network First ਰਜਿਸਟ੍ਰੇਸ਼ਨ
         if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
     </script>
 </body>
