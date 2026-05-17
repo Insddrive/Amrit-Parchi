@@ -1,4 +1,4 @@
-const CACHE_NAME = 'parchi-cache-v21';
+const CACHE_NAME = 'parchi-cache-v22';
 const assets = [
   './',
   './index.html',
@@ -7,7 +7,7 @@ const assets = [
 ];
 
 self.addEventListener('install', event => {
-  self.skipWaiting(); // ਨਵੀਂ ਫਾਈਲ ਨੂੰ ਤੁਰੰਤ ਐਕਟਿਵ ਕਰੋ
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(assets))
   );
@@ -19,11 +19,10 @@ self.addEventListener('activate', event => {
       keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
     ))
   );
-  self.clients.claim(); // ਕਰੋਮ ਦਾ ਕੰਟਰੋਲ ਨਵੇਂ ਸਰਵਿਸ ਵਰਕਰ ਨੂੰ ਦਿਓ
+  self.clients.claim(); 
 });
 
 self.addEventListener('fetch', event => {
-  // Network-First Strategy: ਪਹਿਲਾਂ ਨੈੱਟ ਤੋਂ ਫਾਈਲ ਮੰਗੋ, ਨਾ ਮਿਲਣ ਤੇ ਕੈਸ਼ ਵਰਤੋ
   event.respondWith(
     fetch(event.request)
       .then(response => {
