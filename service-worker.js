@@ -1,9 +1,10 @@
-const CACHE_NAME = 'parchi-cache-v22';
+const CACHE_NAME = 'parchi-cache-v23';
 const assets = [
   './',
   './index.html',
   './manifest.json',
-  './icon.png'
+  './icon.png',
+  'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
 ];
 
 self.addEventListener('install', event => {
