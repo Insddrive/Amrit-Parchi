@@ -15,7 +15,7 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <title>ਪਰਚੀ ਹਿਸਾਬ v24</title>
+    <title>ਪਰਚੀ ਹਿਸਾਬ v25</title>
     <style>
         /* DEFAULT DARK MODE (SUPER AMOLED) */
         :root {
@@ -207,12 +207,13 @@
             <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
             <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
             <a href="tel:9464491806" class="tel">94644-91806</a>
-            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 24.0</div>
+            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 25.0</div>
         </div>
     </div>
 
     <script>
-        const intervalDaysArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 150, 180, 200, 210, 250, 270, 365];
+        // 300 ਦਿਨਾਂ ਨੂੰ ਸਹੀ ਜਗ੍ਹਾ (Sorted Position) 'ਤੇ ਐਡ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ
+        const intervalDaysArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 150, 180, 200, 210, 250, 270, 300, 365];
         let currentTab = 'days';
 
         function updateDateDisplay() {
@@ -371,7 +372,7 @@
             document.getElementById('t_budget').focus();
         }
 
-        // ਡਿਜ਼ਾਈਨ ਜਨਰੇਟ ਕਰਨ ਵਾਲਾ ਫੰਕਸ਼ਨ (ਬੈਕਗਰਾਊਂਡ ਵਾਟਰਮਾਰਕ ਪੂਰੀ ਤਰ੍ਹਾਂ ਹਟਾ ਦਿੱਤਾ ਗਿਆ ਹੈ)
+        // ਮਲਟੀਪਲ ਕਾਪੀਆਂ (3 ਕਾਪੀਆਂ) ਇੱਕੋ ਪੇਜ 'ਤੇ ਬਣਾਉਣ ਵਾਲਾ ਨਵਾਂ ਫੰਕਸ਼ਨ
         function generateCanvas() {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -382,13 +383,10 @@
             canvas.width = width;
             canvas.height = height;
             
-            // 1. ਸਫੈਦ ਬੈਕਗਰਾਊਂਡ
+            // ਸਫੈਦ ਬੈਕਗਰਾਊਂਡ
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, width, height);
             
-            // (ਬੈਕਗਰਾਊਂਡ ਵਾਟਰਮਾਰਕ ਵਾਲਾ ਕੋਡ ਇੱਥੋਂ ਡਿਲੀਟ ਕਰ ਦਿੱਤਾ ਹੈ)
-
-            // 2. ਸੰਖੇਪ ਪਰਚੀ ਲਿਸਟ (ਸੱਜੇ ਪਾਸੇ)
             const startVal = document.getElementById('startDate').value; 
             const [year, month, day] = startVal.split('-');
             const baseDate = new Date(year, month - 1, day);
@@ -397,58 +395,75 @@
             fromDate.setDate(fromDate.getDate() + 1);
             const fromStr = getShortDate(fromDate);
             
-            const perchiWidth = 800;
-            const perchiX = width - perchiWidth - 100; 
-            const perchiY = 100; 
-            const perchiPadding = 40; 
+            // 3 ਪਰਚੀਆਂ ਲਈ ਸਾਈਜ਼ ਅਤੇ ਪੁਜੀਸ਼ਨ ਕੈਲਕੂਲੇਸ਼ਨ (ਹੋਰੀਜ਼ੋਂਟਲ ਲੇਆਉਟ)
+            const perchiWidth = 740;  // ਹਰ ਪਰਚੀ ਦੀ ਚੌੜਾਈ
+            const startX = 80;        // ਖੱਬੇ ਪਾਸੇ ਤੋਂ ਹਾਸ਼ੀਆ
+            const gap = 50;           // ਪਰਚੀਆਂ ਵਿਚਕਾਰ ਖਾਲੀ ਥਾਂ
+            const perchiY = 100;      // ਉੱਪਰੋਂ ਹਾਸ਼ੀਆ
+            const perchiPadding = 30; // ਪਰਚੀ ਦੇ ਅੰਦਰੂਨੀ ਪੈਡਿੰਗ
             
-            ctx.fillStyle = '#000000';
-            ctx.textAlign = 'left';
-            ctx.textBaseline = 'top';
-            
-            ctx.font = 'bold 50px sans-serif';
-            ctx.fillText("ਪਰਚੀ ਹਿਸਾਬ - ਦਿਨਾਂ ਦੀ ਲਿਸਟ", perchiX + perchiPadding, perchiY + perchiPadding);
-            
-            ctx.fillStyle = '#ea580c';
-            ctx.font = 'bold 30px sans-serif';
-            ctx.fillText("Dsgn-Inderjeet Talwandi Sabo 9464491806", perchiX + perchiPadding, perchiY + perchiPadding + 65);
-
-            ctx.font = '35px sans-serif';
-            ctx.fillStyle = '#333333';
-            ctx.fillText(`ਅੱਜ ਦੀ ਤਰੀਕ: ${getShortDate(baseDate)}`, perchiX + perchiPadding, perchiY + perchiPadding + 115);
-
-            let yPos = perchiY + perchiPadding + 190;
-            
-            intervalDaysArray.forEach(days => {
-                let toDate = new Date(baseDate);
-                toDate.setDate(toDate.getDate() + days);
-                const toStr = getShortDate(toDate); 
+            // ਲੂਪ ਰਾਹੀਂ 3 ਕਾਪੀਆਂ ਬਣਾਉਣੀਆਂ (c = 0, 1, 2)
+            for(let c = 0; c < 3; c++) {
+                let currentX = startX + c * (perchiWidth + gap);
                 
                 ctx.fillStyle = '#000000';
-                ctx.font = '40px sans-serif';
-                ctx.fillText(fromStr, perchiX + perchiPadding, yPos);
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'top';
                 
+                // 1. ਮੁੱਖ ਟਾਈਟਲ
+                ctx.font = 'bold 42px sans-serif';
+                ctx.fillText("ਪਰਚੀ ਹਿਸਾਬ - ਦਿਨਾਂ ਦੀ ਲਿਸਟ", currentX + perchiPadding, perchiY + perchiPadding);
+                
+                // 2. ਡਿਜ਼ਾਈਨਰ ਕ੍ਰੈਡਿਟ (ਟਾਈਟਲ ਦੇ ਠੀਕ ਹੇਠਾਂ)
                 ctx.fillStyle = '#ea580c';
-                ctx.font = 'bold 40px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText(`${days} ਦਿਨਾਂ ਬਾਅਦ`, perchiX + perchiWidth/2, yPos);
-                ctx.textAlign = 'left'; 
+                ctx.font = 'bold 26px sans-serif';
+                ctx.fillText("Dsgn-Inderjeet Talwandi Sabo 9464491806", currentX + perchiPadding, perchiY + perchiPadding + 65);
+
+                // 3. ਅੱਜ ਦੀ ਤਰੀਕ (ਕ੍ਰੈਡਿਟ ਦੇ ਹੇਠਾਂ)
+                ctx.font = '32px sans-serif';
+                ctx.fillStyle = '#333333';
+                ctx.fillText(`ਅੱਜ ਦੀ ਤਰੀਕ: ${getShortDate(baseDate)}`, currentX + perchiPadding, perchiY + perchiPadding + 115);
+
+                let yPos = perchiY + perchiPadding + 180;
                 
-                ctx.fillStyle = '#000000';
-                ctx.font = '40px sans-serif';
-                ctx.textAlign = 'right';
-                ctx.fillText(toStr, perchiX + perchiWidth - perchiPadding, yPos);
-                ctx.textAlign = 'left'; 
+                // ਲਿਸਟ ਦਾ ਡਾਟਾ ਪ੍ਰਿੰਟ ਕਰਨਾ
+                intervalDaysArray.forEach(days => {
+                    let toDate = new Date(baseDate);
+                    toDate.setDate(toDate.getDate() + days);
+                    const toStr = getShortDate(toDate); 
+                    
+                    ctx.fillStyle = '#000000';
+                    ctx.font = '36px sans-serif';
+                    ctx.fillText(fromStr, currentX + perchiPadding, yPos);
+                    
+                    ctx.fillStyle = '#ea580c';
+                    ctx.font = 'bold 36px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`${days} ਦਿਨ`, currentX + perchiWidth / 2, yPos);
+                    ctx.textAlign = 'left'; 
+                    
+                    ctx.fillStyle = '#000000';
+                    ctx.font = '36px sans-serif';
+                    ctx.textAlign = 'right';
+                    ctx.fillText(toStr, currentX + perchiWidth - perchiPadding, yPos);
+                    ctx.textAlign = 'left'; 
+                    
+                    // ਹਲਕੀ ਡਿਵਾਈਡਰ ਲਾਈਨ
+                    ctx.beginPath();
+                    ctx.moveTo(currentX + perchiPadding, yPos + 55);
+                    ctx.lineTo(currentX + perchiWidth - perchiPadding, yPos + 55);
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = '#e5e7eb';
+                    ctx.stroke();
+                    
+                    yPos += 75; 
+                });
                 
-                ctx.beginPath();
-                ctx.moveTo(perchiX + perchiPadding, yPos + 60);
-                ctx.lineTo(perchiX + perchiWidth - perchiPadding, yPos + 60);
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = '#e5e7eb';
-                ctx.stroke();
-                
-                yPos += 80; 
-            });
+                // 4. ਪਰਚੀ ਦੇ ਆਲੇ-ਦੁਆਲੇ ਕੱਟਣ (Cutting) ਲਈ ਇੱਕ ਬਾਰਡਰ ਲਾਈਨ ਖਿੱਚਣੀ
+                ctx.strokeStyle = '#cccccc';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(currentX, perchiY, perchiWidth, yPos - perchiY + 10);
+            }
 
             return { canvas, fromStr };
         }
@@ -457,17 +472,16 @@
             const result = generateCanvas();
             const dataUrl = result.canvas.toDataURL('image/jpeg', 1.0);
             const link = document.createElement('a');
-            link.download = `Parchi_List_${result.fromStr}.jpg`;
+            link.download = `Parchi_List_3Copies_${result.fromStr}.jpg`;
             link.href = dataUrl;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
-        // PDF ਨੂੰ ਸਟ੍ਰਿਕਟ A4 ਮਿਲੀਮੀਟਰ ਲੇਆਉਟ (210mm x 297mm) ਵਿੱਚ ਖੋਲ੍ਹਣਾ
         function openPDF() {
             if (!window.jspdf || !window.jspdf.jsPDF) {
-                alert("PDF ਸਿਸਟਮ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇੰਟਰਨੈੱਟ ਆਨ ਰੱਖੋ ਅਤੇ ਕੁਝ ਸੈਕਿੰਡ ਬਾਅਦ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
+                alert("PDF ਸਿਸਟਮ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇੰਟਰਨੈੱਟ ਆਨ ਰੱਖੋ ਅਤੇ ਕੁਝ ਸੈਕਿੰਡ ਬਾਅਦ ਦੁਬਾਰา ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
                 return;
             }
             const result = generateCanvas();
@@ -477,10 +491,9 @@
             const pdf = new jsPDF({
                 orientation: 'portrait',
                 unit: 'mm',
-                format: 'a4' // ਸਟੈਂਡਰਡ A4 ਪੇਪਰ ਸਾਈਜ਼ ਸੈੱਟ
+                format: 'a4' 
             });
             
-            // ਉੱਚ ਰੈਜ਼ੋਲੂਸ਼ਨ ਇਮੇਜ ਨੂੰ ਬਿਲਕੁਲ A4 ਸਾਈਜ਼ (210mm ਚੌੜਾਈ x 297mm ਲੰਬਾਈ) ਵਿੱਚ ਸਕੇਲ ਕਰਨਾ
             pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
             
             const pdfBlob = pdf.output('blob');
