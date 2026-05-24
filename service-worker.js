@@ -1,9 +1,10 @@
-const CACHE_NAME = 'parchi-cache-v25';
+const CACHE_NAME = 'parchi-cache-v26';
 const assets = [
   './',
   './index.html',
   './manifest.json',
-  './icon.png',
+  './icon-192.png',
+  './icon-512.png',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
 ];
 
@@ -20,7 +21,7 @@ self.addEventListener('activate', event => {
       keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
     ))
   );
-  self.clients.claim(); 
+  self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
