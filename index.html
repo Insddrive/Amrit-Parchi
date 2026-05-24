@@ -10,12 +10,12 @@
     <meta http-equiv="Expires" content="0">
     
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="icon.png">
-    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <title>ਪਰਚੀ ਹਿਸਾਬ v25</title>
+    <title>à¨ªà¨°à¨šà©€ à¨¹à¨¿à¨¸à¨¾à¨¬ v25</title>
     <style>
         /* DEFAULT DARK MODE (SUPER AMOLED) */
         :root {
@@ -102,8 +102,8 @@
     <div class="app">
         <div class="header">
             <div>
-                <h1>ਪਰਚੀ ਹਿਸਾਬ</h1>
-                <p>ਸ੍ਰੀ ਦਰਬਾਰ ਸਾਹਿਬ, ਅੰਮ੍ਰਿਤਸਰ</p>
+                <h1>à¨ªà¨°à¨šà©€ à¨¹à¨¿à¨¸à¨¾à¨¬</h1>
+                <p>à¨¸à©à¨°à©€ à¨¦à¨°à¨¬à¨¾à¨° à¨¸à¨¾à¨¹à¨¿à¨¬, à¨…à©°à¨®à©à¨°à¨¿à¨¤à¨¸à¨°</p>
             </div>
             <button onclick="toggleTheme()" id="themeBtn" style="background:rgba(255,255,255,0.2); border:none; border-radius:50%; width:38px; height:38px; color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; transition: 0.2s;">
                 <svg id="moon-icon" width="22" height="22" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
@@ -113,7 +113,7 @@
 
         <div class="content">
             <div class="input-wrap">
-                <div class="label">ਪਰਚੀ ਦੀ ਤਰੀਕ (ਅੱਜ)</div>
+                <div class="label">à¨ªà¨°à¨šà©€ à¨¦à©€ à¨¤à¨°à©€à¨• (à¨…à©±à¨œ)</div>
                 <div class="date-wrapper">
                     <div class="date-display">
                         <span id="dateTextDisplay">DD-MM-YYYY</span>
@@ -126,30 +126,30 @@
             </div>
 
             <div class="tab-box">
-                <button class="tab-btn active" id="btn-days" onclick="switchTab('days')">ਦਿਨ<br>ਪਤਾ ਕਰੋ</button>
-                <button class="tab-btn" id="btn-date" onclick="switchTab('date')">ਤਰੀਕ<br>ਪਤਾ ਕਰੋ</button>
-                <button class="tab-btn" id="btn-list" onclick="switchTab('list')">ਦਿਨਾਂ ਦੀ<br>ਲਿਸਟ</button>
+                <button class="tab-btn active" id="btn-days" onclick="switchTab('days')">à¨¦à¨¿à¨¨<br>à¨ªà¨¤à¨¾ à¨•à¨°à©‹</button>
+                <button class="tab-btn" id="btn-date" onclick="switchTab('date')">à¨¤à¨°à©€à¨•<br>à¨ªà¨¤à¨¾ à¨•à¨°à©‹</button>
+                <button class="tab-btn" id="btn-list" onclick="switchTab('list')">à¨¦à¨¿à¨¨à¨¾à¨‚ à¨¦à©€<br>à¨²à¨¿à¨¸à¨Ÿ</button>
             </div>
 
             <div id="view-days">
                 <div class="input-wrap">
-                    <div class="label">ਕੁੱਲ ਰਕਮ (Total ₹)</div>
+                    <div class="label">à¨•à©à©±à¨² à¨°à¨•à¨® (Total â‚¹)</div>
                     <input type="number" id="t_budget" placeholder="0" inputmode="numeric" oninput="calculate()">
                 </div>
                 <div class="input-wrap">
-                    <div class="label">ਰੋਜ਼ਾਨਾ ਕਟੌਤੀ (Daily ₹)</div>
+                    <div class="label">à¨°à©‹à¨œà¨¼à¨¾à¨¨à¨¾ à¨•à¨Ÿà©Œà¨¤à©€ (Daily â‚¹)</div>
                     <input type="number" id="d_rate" placeholder="0" inputmode="numeric" oninput="calculate()">
                 </div>
             </div>
 
             <div id="view-date" style="display:none;">
                 <div class="grid-3 input-wrap">
-                    <div><div class="label">ਸਾਲ</div><input type="number" id="yy" placeholder="0" oninput="calculate()"></div>
-                    <div><div class="label">ਮਹੀਨੇ</div><input type="number" id="mm" placeholder="0" oninput="calculate()"></div>
-                    <div><div class="label">ਦਿਨ</div><input type="number" id="dd" placeholder="0" oninput="calculate()"></div>
+                    <div><div class="label">à¨¸à¨¾à¨²</div><input type="number" id="yy" placeholder="0" oninput="calculate()"></div>
+                    <div><div class="label">à¨®à¨¹à©€à¨¨à©‡</div><input type="number" id="mm" placeholder="0" oninput="calculate()"></div>
+                    <div><div class="label">à¨¦à¨¿à¨¨</div><input type="number" id="dd" placeholder="0" oninput="calculate()"></div>
                 </div>
                 <div class="input-wrap">
-                    <div class="label">ਕੁੱਲ ਰਕਮ (ਜੇਕਰ ਪਤਾ ਕਰਨੀ ਹੈ ₹)</div>
+                    <div class="label">à¨•à©à©±à¨² à¨°à¨•à¨® (à¨œà©‡à¨•à¨° à¨ªà¨¤à¨¾ à¨•à¨°à¨¨à©€ à¨¹à©ˆ â‚¹)</div>
                     <input type="number" id="t_amt" placeholder="0" inputmode="numeric" oninput="calculate()">
                 </div>
             </div>
@@ -160,9 +160,9 @@
                     <table class="list-table">
                         <thead>
                             <tr>
-                                <th>ਤੋਂ (ਸ਼ੁਰੂ)</th>
-                                <th style="color:var(--p);">ਦਿਨਾਂ ਬਾਅਦ</th>
-                                <th>ਤੱਕ (ਆਖਰੀ)</th>
+                                <th>à¨¤à©‹à¨‚ (à¨¸à¨¼à©à¨°à©‚)</th>
+                                <th style="color:var(--p);">à¨¦à¨¿à¨¨à¨¾à¨‚ à¨¬à¨¾à¨…à¨¦</th>
+                                <th>à¨¤à©±à¨• (à¨†à¨–à¨°à©€)</th>
                             </tr>
                         </thead>
                         <tbody id="listBody"></tbody>
@@ -172,24 +172,24 @@
                 <div style="display: flex; gap: 10px; margin-top: 15px;">
                     <button class="btn-blue" onclick="downloadJPG()" style="flex: 1;">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        JPG ਡਾਊਨਲੋਡ
+                        JPG à¨¡à¨¾à¨Šà¨¨à¨²à©‹à¨¡
                     </button>
                     <button class="btn-pdf" onclick="openPDF()" style="flex: 1;">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                        PDF ਖੋਲ੍ਹੋ
+                        PDF à¨–à©‹à¨²à©à¨¹à©‹
                     </button>
                 </div>
             </div>
 
             <div id="resBox" class="result">
-                <div class="res-title">ਨਤੀਜਾ (ਪਰਚੀ 'ਤੇ ਇਹ ਤਰੀਕ ਪਾਓ)</div>
+                <div class="res-title">à¨¨à¨¤à©€à¨œà¨¾ (à¨ªà¨°à¨šà©€ 'à¨¤à©‡ à¨‡à¨¹ à¨¤à¨°à©€à¨• à¨ªà¨¾à¨“)</div>
                 <div class="date-container">
                     <div class="date-box">
-                        <div class="date-label">ਤੋਂ (ਸ਼ੁਰੂਆਤੀ ਦਿਨ)</div>
+                        <div class="date-label">à¨¤à©‹à¨‚ (à¨¸à¨¼à©à¨°à©‚à¨†à¨¤à©€ à¨¦à¨¿à¨¨)</div>
                         <div id="resFrom" class="date-value"></div>
                     </div>
                     <div class="date-box" style="border-color: var(--p);">
-                        <div class="date-label" style="color: var(--p);">ਤੱਕ (ਆਖਰੀ ਦਿਨ)</div>
+                        <div class="date-label" style="color: var(--p);">à¨¤à©±à¨• (à¨†à¨–à¨°à©€ à¨¦à¨¿à¨¨)</div>
                         <div id="resTo" class="date-value highlight"></div>
                     </div>
                 </div>
@@ -198,21 +198,21 @@
 
             <button class="btn-reset" onclick="resetApp()" id="resetBtn">
                 <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                ਰੀਸੈੱਟ ਕਰੋ
+                à¨°à©€à¨¸à©ˆà©±à¨Ÿ à¨•à¨°à©‹
             </button>
         </div>
 
         <div class="footer">
             <img src="profile.jpg" class="prof" onerror="this.src='https://via.placeholder.com/60'">
-            <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
-            <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
+            <h2>à¨¸: à¨‡à©°à¨¦à¨°à¨œà©€à¨¤ à¨¸à¨¿à©°à¨˜</h2>
+            <p>à¨¤à¨²à¨µà©°à¨¡à©€ à¨¸à¨¾à¨¬à©‹</p>
             <a href="tel:9464491806" class="tel">94644-91806</a>
             <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 25.0</div>
         </div>
     </div>
 
     <script>
-        // 300 ਦਿਨਾਂ ਨੂੰ ਸਹੀ ਜਗ੍ਹਾ (Sorted Position) 'ਤੇ ਐਡ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ
+        // 300 à¨¦à¨¿à¨¨à¨¾à¨‚ à¨¨à©‚à©° à¨¸à¨¹à©€ à¨œà¨—à©à¨¹à¨¾ (Sorted Position) 'à¨¤à©‡ à¨à¨¡ à¨•à¨° à¨¦à¨¿à©±à¨¤à¨¾ à¨—à¨¿à¨† à¨¹à©ˆ
         const intervalDaysArray = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120, 150, 180, 200, 210, 250, 270, 300, 365];
         let currentTab = 'days';
 
@@ -296,7 +296,7 @@
             const [year, month, day] = startVal.split('-');
             const baseDate = new Date(year, month - 1, day);
             
-            document.getElementById('lblListToday').innerText = `ਅੱਜ: ${getFormattedDate(baseDate)}`;
+            document.getElementById('lblListToday').innerText = `à¨…à©±à¨œ: ${getFormattedDate(baseDate)}`;
 
             const fromDate = new Date(baseDate);
             fromDate.setDate(fromDate.getDate() + 1);
@@ -338,7 +338,7 @@
                 
                 const days = Math.floor(total / daily);
                 finalDate.setDate(finalDate.getDate() + days);
-                statsHtml = `<div>ਦਿਨ: ${days}</div><div>ਬਾਕੀ: ₹${(total % daily).toFixed(2)}</div>`;
+                statsHtml = `<div>à¨¦à¨¿à¨¨: ${days}</div><div>à¨¬à¨¾à¨•à©€: â‚¹${(total % daily).toFixed(2)}</div>`;
                 
             } else if (currentTab === 'date') {
                 const y = parseInt(document.getElementById('yy').value) || 0;
@@ -355,8 +355,8 @@
                 finalDate.setMonth(finalDate.getMonth() + m);
                 finalDate.setDate(finalDate.getDate() + d);
                 const diff = Math.round((finalDate - start) / (1000 * 3600 * 24));
-                statsHtml = `<div>ਕੁੱਲ ਦਿਨ: ${diff}</div>`;
-                if (amt > 0 && diff > 0) statsHtml += `<div>ਰੋਜ਼ਾਨਾ: ₹${(amt / diff).toFixed(2)}</div>`;
+                statsHtml = `<div>à¨•à©à©±à¨² à¨¦à¨¿à¨¨: ${diff}</div>`;
+                if (amt > 0 && diff > 0) statsHtml += `<div>à¨°à©‹à¨œà¨¼à¨¾à¨¨à¨¾: â‚¹${(amt / diff).toFixed(2)}</div>`;
             }
 
             document.getElementById('resFrom').innerText = getFormattedDate(fromDate);
@@ -372,7 +372,7 @@
             document.getElementById('t_budget').focus();
         }
 
-        // ਮਲਟੀਪਲ ਕਾਪੀਆਂ (3 ਕਾਪੀਆਂ) ਇੱਕੋ ਪੇਜ 'ਤੇ ਬਣਾਉਣ ਵਾਲਾ ਨਵਾਂ ਫੰਕਸ਼ਨ
+        // à¨®à¨²à¨Ÿà©€à¨ªà¨² à¨•à¨¾à¨ªà©€à¨†à¨‚ (3 à¨•à¨¾à¨ªà©€à¨†à¨‚) à¨‡à©±à¨•à©‹ à¨ªà©‡à¨œ 'à¨¤à©‡ à¨¬à¨£à¨¾à¨‰à¨£ à¨µà¨¾à¨²à¨¾ à¨¨à¨µà¨¾à¨‚ à¨«à©°à¨•à¨¸à¨¼à¨¨
         function generateCanvas() {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -383,7 +383,7 @@
             canvas.width = width;
             canvas.height = height;
             
-            // ਸਫੈਦ ਬੈਕਗਰਾਊਂਡ
+            // à¨¸à¨«à©ˆà¨¦ à¨¬à©ˆà¨•à¨—à¨°à¨¾à¨Šà¨‚à¨¡
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, width, height);
             
@@ -395,14 +395,14 @@
             fromDate.setDate(fromDate.getDate() + 1);
             const fromStr = getShortDate(fromDate);
             
-            // 3 ਪਰਚੀਆਂ ਲਈ ਸਾਈਜ਼ ਅਤੇ ਪੁਜੀਸ਼ਨ ਕੈਲਕੂਲੇਸ਼ਨ (ਹੋਰੀਜ਼ੋਂਟਲ ਲੇਆਉਟ)
-            const perchiWidth = 740;  // ਹਰ ਪਰਚੀ ਦੀ ਚੌੜਾਈ
-            const startX = 80;        // ਖੱਬੇ ਪਾਸੇ ਤੋਂ ਹਾਸ਼ੀਆ
-            const gap = 50;           // ਪਰਚੀਆਂ ਵਿਚਕਾਰ ਖਾਲੀ ਥਾਂ
-            const perchiY = 100;      // ਉੱਪਰੋਂ ਹਾਸ਼ੀਆ
-            const perchiPadding = 30; // ਪਰਚੀ ਦੇ ਅੰਦਰੂਨੀ ਪੈਡਿੰਗ
+            // 3 à¨ªà¨°à¨šà©€à¨†à¨‚ à¨²à¨ˆ à¨¸à¨¾à¨ˆà¨œà¨¼ à¨…à¨¤à©‡ à¨ªà©à¨œà©€à¨¸à¨¼à¨¨ à¨•à©ˆà¨²à¨•à©‚à¨²à©‡à¨¸à¨¼à¨¨ (à¨¹à©‹à¨°à©€à¨œà¨¼à©‹à¨‚à¨Ÿà¨² à¨²à©‡à¨†à¨‰à¨Ÿ)
+            const perchiWidth = 740;  // à¨¹à¨° à¨ªà¨°à¨šà©€ à¨¦à©€ à¨šà©Œà©œà¨¾à¨ˆ
+            const startX = 80;        // à¨–à©±à¨¬à©‡ à¨ªà¨¾à¨¸à©‡ à¨¤à©‹à¨‚ à¨¹à¨¾à¨¸à¨¼à©€à¨†
+            const gap = 50;           // à¨ªà¨°à¨šà©€à¨†à¨‚ à¨µà¨¿à¨šà¨•à¨¾à¨° à¨–à¨¾à¨²à©€ à¨¥à¨¾à¨‚
+            const perchiY = 100;      // à¨‰à©±à¨ªà¨°à©‹à¨‚ à¨¹à¨¾à¨¸à¨¼à©€à¨†
+            const perchiPadding = 30; // à¨ªà¨°à¨šà©€ à¨¦à©‡ à¨…à©°à¨¦à¨°à©‚à¨¨à©€ à¨ªà©ˆà¨¡à¨¿à©°à¨—
             
-            // ਲੂਪ ਰਾਹੀਂ 3 ਕਾਪੀਆਂ ਬਣਾਉਣੀਆਂ (c = 0, 1, 2)
+            // à¨²à©‚à¨ª à¨°à¨¾à¨¹à©€à¨‚ 3 à¨•à¨¾à¨ªà©€à¨†à¨‚ à¨¬à¨£à¨¾à¨‰à¨£à©€à¨†à¨‚ (c = 0, 1, 2)
             for(let c = 0; c < 3; c++) {
                 let currentX = startX + c * (perchiWidth + gap);
                 
@@ -410,23 +410,23 @@
                 ctx.textAlign = 'left';
                 ctx.textBaseline = 'top';
                 
-                // 1. ਮੁੱਖ ਟਾਈਟਲ
+                // 1. à¨®à©à©±à¨– à¨Ÿà¨¾à¨ˆà¨Ÿà¨²
                 ctx.font = 'bold 42px sans-serif';
-                ctx.fillText("ਪਰਚੀ ਹਿਸਾਬ - ਦਿਨਾਂ ਦੀ ਲਿਸਟ", currentX + perchiPadding, perchiY + perchiPadding);
+                ctx.fillText("à¨ªà¨°à¨šà©€ à¨¹à¨¿à¨¸à¨¾à¨¬ - à¨¦à¨¿à¨¨à¨¾à¨‚ à¨¦à©€ à¨²à¨¿à¨¸à¨Ÿ", currentX + perchiPadding, perchiY + perchiPadding);
                 
-                // 2. ਡਿਜ਼ਾਈਨਰ ਕ੍ਰੈਡਿਟ (ਟਾਈਟਲ ਦੇ ਠੀਕ ਹੇਠਾਂ)
+                // 2. à¨¡à¨¿à¨œà¨¼à¨¾à¨ˆà¨¨à¨° à¨•à©à¨°à©ˆà¨¡à¨¿à¨Ÿ (à¨Ÿà¨¾à¨ˆà¨Ÿà¨² à¨¦à©‡ à¨ à©€à¨• à¨¹à©‡à¨ à¨¾à¨‚)
                 ctx.fillStyle = '#ea580c';
                 ctx.font = 'bold 26px sans-serif';
                 ctx.fillText("Dsgn-Inderjeet Talwandi Sabo 9464491806", currentX + perchiPadding, perchiY + perchiPadding + 65);
 
-                // 3. ਅੱਜ ਦੀ ਤਰੀਕ (ਕ੍ਰੈਡਿਟ ਦੇ ਹੇਠਾਂ)
+                // 3. à¨…à©±à¨œ à¨¦à©€ à¨¤à¨°à©€à¨• (à¨•à©à¨°à©ˆà¨¡à¨¿à¨Ÿ à¨¦à©‡ à¨¹à©‡à¨ à¨¾à¨‚)
                 ctx.font = '32px sans-serif';
                 ctx.fillStyle = '#333333';
-                ctx.fillText(`ਅੱਜ ਦੀ ਤਰੀਕ: ${getShortDate(baseDate)}`, currentX + perchiPadding, perchiY + perchiPadding + 115);
+                ctx.fillText(`à¨…à©±à¨œ à¨¦à©€ à¨¤à¨°à©€à¨•: ${getShortDate(baseDate)}`, currentX + perchiPadding, perchiY + perchiPadding + 115);
 
                 let yPos = perchiY + perchiPadding + 180;
                 
-                // ਲਿਸਟ ਦਾ ਡਾਟਾ ਪ੍ਰਿੰਟ ਕਰਨਾ
+                // à¨²à¨¿à¨¸à¨Ÿ à¨¦à¨¾ à¨¡à¨¾à¨Ÿà¨¾ à¨ªà©à¨°à¨¿à©°à¨Ÿ à¨•à¨°à¨¨à¨¾
                 intervalDaysArray.forEach(days => {
                     let toDate = new Date(baseDate);
                     toDate.setDate(toDate.getDate() + days);
@@ -439,7 +439,7 @@
                     ctx.fillStyle = '#ea580c';
                     ctx.font = 'bold 36px sans-serif';
                     ctx.textAlign = 'center';
-                    ctx.fillText(`${days} ਦਿਨ`, currentX + perchiWidth / 2, yPos);
+                    ctx.fillText(`${days} à¨¦à¨¿à¨¨`, currentX + perchiWidth / 2, yPos);
                     ctx.textAlign = 'left'; 
                     
                     ctx.fillStyle = '#000000';
@@ -448,7 +448,7 @@
                     ctx.fillText(toStr, currentX + perchiWidth - perchiPadding, yPos);
                     ctx.textAlign = 'left'; 
                     
-                    // ਹਲਕੀ ਡਿਵਾਈਡਰ ਲਾਈਨ
+                    // à¨¹à¨²à¨•à©€ à¨¡à¨¿à¨µà¨¾à¨ˆà¨¡à¨° à¨²à¨¾à¨ˆà¨¨
                     ctx.beginPath();
                     ctx.moveTo(currentX + perchiPadding, yPos + 55);
                     ctx.lineTo(currentX + perchiWidth - perchiPadding, yPos + 55);
@@ -459,7 +459,7 @@
                     yPos += 75; 
                 });
                 
-                // 4. ਪਰਚੀ ਦੇ ਆਲੇ-ਦੁਆਲੇ ਕੱਟਣ (Cutting) ਲਈ ਇੱਕ ਬਾਰਡਰ ਲਾਈਨ ਖਿੱਚਣੀ
+                // 4. à¨ªà¨°à¨šà©€ à¨¦à©‡ à¨†à¨²à©‡-à¨¦à©à¨†à¨²à©‡ à¨•à©±à¨Ÿà¨£ (Cutting) à¨²à¨ˆ à¨‡à©±à¨• à¨¬à¨¾à¨°à¨¡à¨° à¨²à¨¾à¨ˆà¨¨ à¨–à¨¿à©±à¨šà¨£à©€
                 ctx.strokeStyle = '#cccccc';
                 ctx.lineWidth = 2;
                 ctx.strokeRect(currentX, perchiY, perchiWidth, yPos - perchiY + 10);
@@ -481,7 +481,7 @@
 
         function openPDF() {
             if (!window.jspdf || !window.jspdf.jsPDF) {
-                alert("PDF ਸਿਸਟਮ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਇੰਟਰਨੈੱਟ ਆਨ ਰੱਖੋ ਅਤੇ ਕੁਝ ਸੈਕਿੰਡ ਬਾਅਦ ਦੁਬਾਰา ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
+                alert("PDF à¨¸à¨¿à¨¸à¨Ÿà¨® à¨²à©‹à¨¡ à¨¹à©‹ à¨°à¨¿à¨¹à¨¾ à¨¹à©ˆà¥¤ à¨•à¨¿à¨°à¨ªà¨¾ à¨•à¨°à¨•à©‡ à¨‡à©°à¨Ÿà¨°à¨¨à©ˆà©±à¨Ÿ à¨†à¨¨ à¨°à©±à¨–à©‹ à¨…à¨¤à©‡ à¨•à©à¨ à¨¸à©ˆà¨•à¨¿à©°à¨¡ à¨¬à¨¾à¨…à¨¦ à¨¦à©à¨¬à¨¾à¨°à¸² à¨•à©‹à¨¸à¨¼à¨¿à¨¸à¨¼ à¨•à¨°à©‹à¥¤");
                 return;
             }
             const result = generateCanvas();
