@@ -358,8 +358,10 @@
                 if (amt > 0 && diff > 0) statsHtml += `<div>ਰੋਜ਼ਾਨਾ: ₹${(amt / diff).toFixed(2)}</div>`;
             }
 
-            document.getElementById('resFrom').innerText = getFormattedDate(fromDate);
-            document.getElementById('resTo').innerText = getFormattedDate(finalDate);
+            // ਇੱਥੇ ਬਦਲਾਅ ਕੀਤਾ ਗਿਆ ਹੈ (getFormattedDate ਦੀ ਜਗ੍ਹਾ getShortDate)
+            document.getElementById('resFrom').innerText = getShortDate(fromDate);
+            document.getElementById('resTo').innerText = getShortDate(finalDate);
+            
             document.getElementById('resStats').innerHTML = statsHtml;
             document.getElementById('resBox').style.display = 'block';
         }
