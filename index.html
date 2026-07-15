@@ -17,22 +17,31 @@
 
     <title>ਪਰਚੀ ਹਿਸਾਬ v26</title>
     <style>
-        /* DEFAULT DARK MODE (SUPER AMOLED) */
+        /* DEFAULT LIGHT MODE (ਵਾਇਟ ਮੋਡ) */
         :root {
-            --p: #ea580c; --bg: #000000; --card: #121212;
-            --txt: #e5e7eb; --head: #fdba74;
-            --in-bg: #1a1a1a; --in-br: #333333;
-            --res-bg: #064e3b; --res-br: #059669;
-            --box-bg: rgba(0, 0, 0, 0.2);
-            --tbl-th: #262626; --tbl-td: #1a1a1a; --tbl-br: #333333;
+            --p: #ea580c; 
+            --bg: #fff7ed; 
+            --card: #ffffff;
+            --txt: #374151; 
+            --head: #9a3412;
+            --in-bg: #f9fafb; 
+            --in-br: #e5e7eb;
+            --tbl-th: #fed7aa; 
+            --tbl-td: #fff7ed; 
+            --tbl-br: #fdba74;
         }
-        .light-mode {
-            --bg: #fff7ed; --card: #ffffff;
-            --txt: #374151; --head: #9a3412;
-            --in-bg: #f9fafb; --in-br: #e5e7eb;
-            --res-bg: #ecfdf5; --res-br: #34d399;
-            --box-bg: rgba(255, 255, 255, 0.6);
-            --tbl-th: #fed7aa; --tbl-td: #fff7ed; --tbl-br: #fdba74;
+
+        /* DARK MODE OPTION (ਨਾਈਟ ਮੋਡ) */
+        .dark-mode {
+            --bg: #000000; 
+            --card: #121212;
+            --txt: #e5e7eb; 
+            --head: #fdba74;
+            --in-bg: #1a1a1a; 
+            --in-br: #333333;
+            --tbl-th: #262626; 
+            --tbl-td: #1a1a1a; 
+            --tbl-br: #333333;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: system-ui, -apple-system, sans-serif; }
@@ -73,15 +82,43 @@
         .btn-reset { width: 100%; background: #dc2626; color: white; border: none; padding: 12px; font-size: 15px; font-weight: 700; border-radius: 10px; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 0 #991b1b; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.1s; }
         .btn-reset:active { transform: translateY(4px); box-shadow: 0 0px 0 #991b1b; }
 
-        .result { margin-top: 10px; background: var(--res-bg); border: 2px solid var(--res-br); border-radius: 12px; padding: 15px; text-align: center; display: none; }
-        .res-title { font-size: 14px; font-weight: 800; color: var(--txt); margin-bottom: 12px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* --- ਨਵਾਂ ਸਾਫ਼ ਅਤੇ ਖੁੱਲ੍ਹਾ ਰਿਜ਼ਲਟ ਡਿਜ਼ਾਈਨ --- */
+        .result { 
+            margin-top: 20px; 
+            background: transparent; 
+            border: none; 
+            padding: 10px 5px; 
+            text-align: center; 
+            display: none; 
+        }
         
-        .date-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .date-box { background: var(--box-bg); border: 1px solid var(--res-br); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
-        .date-label { font-size: 12px; font-weight: 700; color: var(--res-br); text-transform: uppercase; }
-        .date-value { font-size: 16px; font-weight: 700; color: var(--txt); }
-        .date-value.highlight { color: var(--p); font-size: 19px; font-weight: 800; }
-        .res-stats { display: flex; justify-content: space-around; border-top: 1px dashed var(--res-br); padding-top: 12px; font-size: 15px; font-weight: 700; color: var(--txt); }
+        .res-title { font-size: 15px; font-weight: 800; color: var(--head); margin-bottom: 20px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .date-container { display: flex; flex-direction: column; gap: 16px; margin-bottom: 25px; }
+        
+        .date-box { 
+            background: var(--in-bg); 
+            border: 1px solid var(--in-br); 
+            border-radius: 16px; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
+        }
+
+        .date-box.highlight-box {
+            border: 2px solid var(--p);
+            background: rgba(234, 88, 12, 0.05); /* ਹਲਕਾ ਜਿਹਾ ਸੰਤਰੀ (Orange) ਟੱਚ */
+        }
+        
+        .date-label { font-size: 13px; font-weight: 700; color: var(--txt); opacity: 0.8; text-transform: uppercase; }
+        .date-value { font-size: 18px; font-weight: 700; color: var(--txt); }
+        
+        /* ਆਖਰੀ ਤਰੀਕ ਨੂੰ ਵੱਡਾ ਅਤੇ ਸਪਸ਼ਟ ਦਿਖਾਉਣ ਲਈ */
+        .date-value.highlight { color: var(--p); font-size: 24px; font-weight: 900; }
+        
+        .res-stats { display: flex; justify-content: space-around; border-top: 1px solid var(--in-br); padding-top: 20px; font-size: 16px; font-weight: 700; color: var(--txt); }
 
         .table-container { margin-top: 10px; border: 1px solid var(--tbl-br); border-radius: 8px; overflow: hidden; background: var(--in-bg); }
         .list-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; }
@@ -97,9 +134,7 @@
         .footer .tel { font-size: 21px; color: #16a34a; font-weight: 900; margin-top: 5px; display: block; text-decoration: none; }
     </style>
 </head>
-<body class="dark-mode">
-
-    <div class="app">
+<body> <div class="app">
         <div class="header">
             <div>
                 <h1>ਪਰਚੀ ਹਿਸਾਬ</h1>
@@ -188,7 +223,7 @@
                         <div class="date-label">ਤੋਂ (ਸ਼ੁਰੂਆਤੀ ਦਿਨ)</div>
                         <div id="resFrom" class="date-value"></div>
                     </div>
-                    <div class="date-box" style="border-color: var(--p);">
+                    <div class="date-box highlight-box">
                         <div class="date-label" style="color: var(--p);">ਤੱਕ (ਆਖਰੀ ਦਿਨ)</div>
                         <div id="resTo" class="date-value highlight"></div>
                     </div>
@@ -234,27 +269,31 @@
             updateDateDisplay();
         }
 
+        // ਡਿਫਾਲਟ ਥੀਮ ਸੈਟਿੰਗ ਅਪਡੇਟ ਕੀਤੀ ਗਈ
         window.onload = () => {
             setToday(); 
             const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                document.body.classList.remove('dark-mode');
-                document.body.classList.add('light-mode');
-                updateThemeIcons(true);
+            
+            // ਜੇਕਰ ਪਹਿਲਾਂ ਤੋਂ 'dark' ਸੇਵ ਹੈ, ਤਾਂ ਡਾਰਕ ਮੋਡ ਲਾਗੂ ਕਰੋ, ਨਹੀਂ ਤਾਂ ਲਾਈਟ ਮੋਡ (ਡਿਫਾਲਟ)
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                updateThemeIcons(false); // isLight = false
             } else {
-                updateThemeIcons(false);
+                document.body.classList.remove('dark-mode');
+                updateThemeIcons(true); // isLight = true
             }
         };
 
         function toggleTheme() {
-            const isLight = document.body.classList.toggle('light-mode');
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            updateThemeIcons(isLight);
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcons(!isDark);
         }
 
         function updateThemeIcons(isLight) {
-            document.getElementById('sun-icon').style.display = isLight ? 'block' : 'none';
-            document.getElementById('moon-icon').style.display = isLight ? 'none' : 'block';
+            // ਜੇਕਰ ਲਾਈਟ ਮੋਡ ਹੈ, ਤਾਂ ਚੰਨ ਦਿਖਾਓ (ਤਾਂ ਜੋ ਡਾਰਕ ਮੋਡ 'ਤੇ ਜਾਇਆ ਜਾ ਸਕੇ)
+            document.getElementById('sun-icon').style.display = isLight ? 'none' : 'block';
+            document.getElementById('moon-icon').style.display = isLight ? 'block' : 'none';
         }
 
         function switchTab(t) {
@@ -358,7 +397,6 @@
                 if (amt > 0 && diff > 0) statsHtml += `<div>ਰੋਜ਼ਾਨਾ: ₹${(amt / diff).toFixed(2)}</div>`;
             }
 
-            // ਇੱਥੇ ਬਦਲਾਅ ਕੀਤਾ ਗਿਆ ਹੈ (getFormattedDate ਦੀ ਜਗ੍ਹਾ getShortDate)
             document.getElementById('resFrom').innerText = getShortDate(fromDate);
             document.getElementById('resTo').innerText = getShortDate(finalDate);
             
