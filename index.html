@@ -60,6 +60,10 @@
         .tab-btn.active { background: var(--p); color: white; box-shadow: 0 2px 5px rgba(234, 88, 12, 0.4); }
 
         .label { font-size: 13px; font-weight: 700; color: var(--head); margin-bottom: 6px; }
+        
+        /* ਅੱਖਰਾਂ ਨੂੰ ਹੋਰ ਵੱਡਾ ਅਤੇ ਮੋਟਾ ਕੀਤਾ ਗਿਆ */
+        .big-label { font-size: 18px; font-weight: 900; color: var(--head); margin-bottom: 10px; text-align: center; letter-spacing: 0.5px; }
+
         .input-wrap { margin-bottom: 15px; }
         
         input { width: 100%; padding: 12px; font-size: 16px; border: 2px solid var(--in-br); border-radius: 8px; background: var(--in-bg); color: var(--txt); font-weight: 600; outline: none; transition: 0.2s; }
@@ -69,6 +73,9 @@
         .date-display { width: 100%; padding: 12px; font-size: 16px; border: 2px solid var(--in-br); border-radius: 8px; background: var(--in-bg); color: var(--txt); font-weight: 600; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
         .date-input-hidden { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
         .date-wrapper:focus-within .date-display { border-color: var(--p); }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .grid-2 input { text-align: center; font-size: 18px; font-weight: 800; }
 
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
         .grid-3 input { text-align: center; }
@@ -84,7 +91,7 @@
 
         /* --- ਨਵਾਂ ਸਾਫ਼ ਅਤੇ ਖੁੱਲ੍ਹਾ ਰਿਜ਼ਲਟ ਡਿਜ਼ਾਈਨ --- */
         .result { 
-            margin-top: 20px; 
+            margin-top: 15px; 
             background: transparent; 
             border: none; 
             padding: 10px 5px; 
@@ -92,15 +99,13 @@
             display: none; 
         }
         
-        .res-title { font-size: 15px; font-weight: 800; color: var(--head); margin-bottom: 20px; opacity: 0.9; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        .date-container { display: flex; flex-direction: column; gap: 16px; margin-bottom: 25px; }
+        .date-container { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
         
         .date-box { 
             background: var(--in-bg); 
             border: 1px solid var(--in-br); 
-            border-radius: 16px; 
-            padding: 20px; 
+            border-radius: 12px; 
+            padding: 15px; 
             display: flex; 
             flex-direction: column; 
             gap: 8px; 
@@ -109,16 +114,16 @@
 
         .date-box.highlight-box {
             border: 2px solid var(--p);
-            background: rgba(234, 88, 12, 0.05); /* ਹਲਕਾ ਜਿਹਾ ਸੰਤਰੀ (Orange) ਟੱਚ */
+            background: rgba(234, 88, 12, 0.05); 
         }
         
         .date-label { font-size: 13px; font-weight: 700; color: var(--txt); opacity: 0.8; text-transform: uppercase; }
         .date-value { font-size: 18px; font-weight: 700; color: var(--txt); }
         
-        /* ਆਖਰੀ ਤਰੀਕ ਨੂੰ ਵੱਡਾ ਅਤੇ ਸਪਸ਼ਟ ਦਿਖਾਉਣ ਲਈ */
         .date-value.highlight { color: var(--p); font-size: 24px; font-weight: 900; }
         
-        .res-stats { display: flex; justify-content: space-around; border-top: 1px solid var(--in-br); padding-top: 20px; font-size: 16px; font-weight: 700; color: var(--txt); }
+        .res-stats { display: flex; flex-direction: column; align-items: center; border-top: 1px solid var(--in-br); padding-top: 15px; font-size: 16px; font-weight: 700; color: var(--txt); }
+        .stats-row { display: flex; justify-content: space-around; width: 100%; }
 
         .table-container { margin-top: 10px; border: 1px solid var(--tbl-br); border-radius: 8px; overflow: hidden; background: var(--in-bg); }
         .list-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; }
@@ -167,13 +172,15 @@
             </div>
 
             <div id="view-days">
-                <div class="input-wrap">
-                    <div class="label">ਕੁੱਲ ਰਕਮ (Total ₹)</div>
-                    <input type="number" id="t_budget" placeholder="0" inputmode="numeric" oninput="calculate()">
-                </div>
-                <div class="input-wrap">
-                    <div class="label">ਰੋਜ਼ਾਨਾ ਕਟੌਤੀ (Daily ₹)</div>
-                    <input type="number" id="d_rate" placeholder="0" inputmode="numeric" oninput="calculate()">
+                <div class="grid-2 input-wrap">
+                    <div>
+                        <div class="big-label">ਕੁੱਲ ਰਕਮ<br>(Total ₹)</div>
+                        <input type="number" id="t_budget" placeholder="0" inputmode="numeric" oninput="calculate()">
+                    </div>
+                    <div>
+                        <div class="big-label">ਰੋਜ਼ਾਨਾ ਕਟੌਤੀ<br>(Daily ₹)</div>
+                        <input type="number" id="d_rate" placeholder="0" inputmode="numeric" oninput="calculate()">
+                    </div>
                 </div>
             </div>
 
@@ -217,7 +224,9 @@
             </div>
 
             <div id="resBox" class="result">
-                <div class="res-title">ਨਤੀਜਾ (ਪਰਚੀ 'ਤੇ ਇਹ ਤਰੀਕ ਪਾਓ)</div>
+                <!-- ਚਿਤਾਵਨੀ ਵਾਲਾ ਬਾਕਸ ਸਭ ਤੋਂ ਉੱਪਰ -->
+                <div id="warningBox" style="display:none; margin-bottom: 20px; width: 100%; background: #fee2e2; border: 1px solid #ef4444; border-radius: 10px; padding: 12px; color: #b91c1c; font-size: 15px; text-align: center; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.15);"></div>
+                
                 <div class="date-container">
                     <div class="date-box">
                         <div class="date-label">ਤੋਂ (ਸ਼ੁਰੂਆਤੀ ਦਿਨ)</div>
@@ -269,18 +278,16 @@
             updateDateDisplay();
         }
 
-        // ਡਿਫਾਲਟ ਥੀਮ ਸੈਟਿੰਗ ਅਪਡੇਟ ਕੀਤੀ ਗਈ
         window.onload = () => {
             setToday(); 
             const savedTheme = localStorage.getItem('theme');
             
-            // ਜੇਕਰ ਪਹਿਲਾਂ ਤੋਂ 'dark' ਸੇਵ ਹੈ, ਤਾਂ ਡਾਰਕ ਮੋਡ ਲਾਗੂ ਕਰੋ, ਨਹੀਂ ਤਾਂ ਲਾਈਟ ਮੋਡ (ਡਿਫਾਲਟ)
             if (savedTheme === 'dark') {
                 document.body.classList.add('dark-mode');
-                updateThemeIcons(false); // isLight = false
+                updateThemeIcons(false);
             } else {
                 document.body.classList.remove('dark-mode');
-                updateThemeIcons(true); // isLight = true
+                updateThemeIcons(true);
             }
         };
 
@@ -291,7 +298,6 @@
         }
 
         function updateThemeIcons(isLight) {
-            // ਜੇਕਰ ਲਾਈਟ ਮੋਡ ਹੈ, ਤਾਂ ਚੰਨ ਦਿਖਾਓ (ਤਾਂ ਜੋ ਡਾਰਕ ਮੋਡ 'ਤੇ ਜਾਇਆ ਜਾ ਸਕੇ)
             document.getElementById('sun-icon').style.display = isLight ? 'none' : 'block';
             document.getElementById('moon-icon').style.display = isLight ? 'block' : 'none';
         }
@@ -326,6 +332,10 @@
         
         function getShortDate(dateObj) {
             return `${String(dateObj.getDate()).padStart(2,'0')}-${String(dateObj.getMonth()+1).padStart(2,'0')}-${dateObj.getFullYear()}`;
+        }
+        
+        function getSpacedDate(dateObj) {
+            return `${String(dateObj.getDate()).padStart(2,'0')} &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; ${String(dateObj.getMonth()+1).padStart(2,'0')} &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; ${dateObj.getFullYear()}`;
         }
 
         function buildListUI() {
@@ -365,6 +375,9 @@
             let fromDate = new Date(start);
             fromDate.setDate(fromDate.getDate() + 1);
 
+            const warningBox = document.getElementById('warningBox');
+            warningBox.style.display = 'none'; // ਪਹਿਲਾਂ ਚਿਤਾਵਨੀ ਛੁਪਾ ਦਿਓ
+
             if (currentTab === 'days') {
                 const total = parseFloat(document.getElementById('t_budget').value) || 0;
                 const daily = parseFloat(document.getElementById('d_rate').value) || 0;
@@ -375,8 +388,16 @@
                 }
                 
                 const days = Math.floor(total / daily);
+                const rem = total % daily; 
                 finalDate.setDate(finalDate.getDate() + days);
-                statsHtml = `<div>ਦਿਨ: ${days}</div><div>ਬਾਕੀ: ₹${(total % daily).toFixed(2)}</div>`;
+                
+                statsHtml = `<div class="stats-row"><div>ਦਿਨ: ${days}</div><div>ਬਾਕੀ: ₹${rem.toFixed(2)}</div></div>`;
+                
+                // ਜੇਕਰ ਰਕਮ ਬਾਕੀ ਬਚਦੀ ਹੈ ਤਾਂ ਉੱਪਰ ਚਿਤਾਵਨੀ ਸ਼ੋਅ ਕਰੋ
+                if (rem > 0) {
+                    warningBox.innerHTML = `⚠️ <b>ਚਿਤਾਵਨੀ:</b> ਤੁਹਾਡੀ ਰਕਮ ਪੂਰੀ ਤਰ੍ਹਾਂ ਨਹੀਂ ਵੰਡੀ ਗਈ, ਅਖੀਰ ਵਿੱਚ <b>₹${rem.toFixed(2)}</b> ਬਾਕੀ ਬਚਦੇ ਹਨ।`;
+                    warningBox.style.display = 'block';
+                }
                 
             } else if (currentTab === 'date') {
                 const y = parseInt(document.getElementById('yy').value) || 0;
@@ -393,12 +414,14 @@
                 finalDate.setMonth(finalDate.getMonth() + m);
                 finalDate.setDate(finalDate.getDate() + d);
                 const diff = Math.round((finalDate - start) / (1000 * 3600 * 24));
-                statsHtml = `<div>ਕੁੱਲ ਦਿਨ: ${diff}</div>`;
+                
+                statsHtml = `<div class="stats-row"><div>ਕੁੱਲ ਦਿਨ: ${diff}</div>`;
                 if (amt > 0 && diff > 0) statsHtml += `<div>ਰੋਜ਼ਾਨਾ: ₹${(amt / diff).toFixed(2)}</div>`;
+                statsHtml += `</div>`;
             }
 
-            document.getElementById('resFrom').innerText = getShortDate(fromDate);
-            document.getElementById('resTo').innerText = getShortDate(finalDate);
+            document.getElementById('resFrom').innerHTML = getSpacedDate(fromDate);
+            document.getElementById('resTo').innerHTML = getSpacedDate(finalDate);
             
             document.getElementById('resStats').innerHTML = statsHtml;
             document.getElementById('resBox').style.display = 'block';
@@ -407,6 +430,7 @@
         function resetApp() {
             setToday(); 
             document.querySelectorAll('input[type="number"]').forEach(i => i.value = '');
+            document.getElementById('warningBox').style.display = 'none';
             document.getElementById('resBox').style.display = 'none';
             document.getElementById('t_budget').focus();
         }
