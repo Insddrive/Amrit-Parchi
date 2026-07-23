@@ -118,7 +118,6 @@
         
         .date-label { font-size: 13px; font-weight: 700; color: var(--txt); opacity: 0.8; text-transform: uppercase; }
         
-        /* ਦੋਵੇਂ ਤਰੀਕਾਂ ਨੂੰ ਇੱਕੋ ਜਿਹਾ ਵੱਡਾ ਅਤੇ ਮੋਟਾ ਬਣਾਉਣ ਲਈ ਨਵਾਂ CSS */
         .date-value { font-size: 24px; font-weight: 900; color: var(--txt); }
         .date-value.highlight { color: var(--p); }
         
@@ -132,11 +131,14 @@
         .list-table tr:last-child td { border-bottom: none; }
         .today-lbl { font-size: 14px; font-weight: bold; color: var(--head); text-align: center; margin-bottom: 8px; }
 
-        .footer { background: var(--in-bg); padding: 15px; text-align: center; border-top: 1px solid var(--in-br); margin-top: 10px; }
-        .prof { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #16a34a; margin-bottom: 8px; object-fit: cover; }
-        .footer h2 { margin: 0; font-size: 19px; color: var(--txt); }
-        .footer p { margin: 2px 0; font-size: 13px; opacity: 0.8; }
-        .footer .tel { font-size: 21px; color: #16a34a; font-weight: 900; margin-top: 5px; display: block; text-decoration: none; }
+        /* --- ਨਵਾਂ ਫੁੱਟਰ (ਕੰਪੈਕਟ ਡਿਜ਼ਾਈਨ) --- */
+        .footer { background: var(--in-bg); padding: 12px 15px; border-top: 1px solid var(--in-br); margin-top: 10px; display: flex; align-items: center; gap: 15px; text-align: left; }
+        .prof { width: 65px; height: 65px; border-radius: 50%; border: 3px solid #16a34a; object-fit: cover; flex-shrink: 0; }
+        .footer-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .footer h2 { margin: 0; font-size: 17px; font-weight: 800; color: var(--txt); }
+        .footer p { margin: 2px 0 0 0; font-size: 13px; opacity: 0.8; }
+        .footer .tel { font-size: 18px; color: #16a34a; font-weight: 900; margin-top: 4px; display: inline-block; text-decoration: none; }
+        .footer-version { font-size: 10px; opacity: 0.5; font-weight: bold; margin-top: 4px; }
     </style>
 </head>
 <body> <div class="app">
@@ -247,10 +249,12 @@
 
         <div class="footer">
             <img src="profile.jpg" class="prof" onerror="this.src='https://via.placeholder.com/60'">
-            <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
-            <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
-            <a href="tel:9464491806" class="tel">94644-91806</a>
-            <div style="font-size:10px; margin-top:10px; opacity:0.5; font-weight: bold;">Version 26.0</div>
+            <div class="footer-info">
+                <h2>ਸ: ਇੰਦਰਜੀਤ ਸਿੰਘ</h2>
+                <p>ਤਲਵੰਡੀ ਸਾਬੋ</p>
+                <a href="tel:9464491806" class="tel">94644-91806</a>
+                <div class="footer-version">Version 26.0</div>
+            </div>
         </div>
     </div>
 
